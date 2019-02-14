@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".CreateForm"></activity>
         <activity
             android:name=".MainPage"
             android:label="@string/title_activity_main_page"
@@ -21,10 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SplashScreen">
-
-        </activity>
+        <activity android:name=".SplashScreen"></activity>
     </application>
 
 </manifest>
