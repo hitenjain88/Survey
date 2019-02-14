@@ -4,4 +4,5 @@
     <string name="title_activity_main_page">MainPage</string>
     <string name="MainPage_Button1">Create New Form</string>
     <string name="MainPage_Button2">Existing Form</string>
+    <string name="enter_details_for_your_form">Enter Details for Your Form</string>
 </resources>
