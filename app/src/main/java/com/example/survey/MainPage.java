@@ -25,8 +25,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Permission;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainPage extends AppCompatActivity {
 
@@ -86,26 +97,68 @@ public class MainPage extends AppCompatActivity {
                         public void onClick(View v) {
                             TextInputLayout tit = alertView.findViewById(R.id.title);
                             TextInputLayout des = alertView.findViewById(R.id.description);
+                            TextInputLayout auth = alertView.findViewById(R.id.author);
 
                             String title = tit.getEditText().getText().toString();
                             String description = des.getEditText().getText().toString();
+                            String author = auth.getEditText().getText().toString();
 
 
 
-                            if(!title.equals("") && !description.equals("")) {
+                            if(!title.equals("") && !description.equals("") && !author.equals("")) {
 
-                                File file = new File(DIR_PATH);
-                                if(!file.exists()){
-                                    file.mkdir();
-                                    Toast.makeText(MainPage.this, "Directory Created", Toast.LENGTH_SHORT).show();
+                                File dir = new File(DIR_PATH);
+                                if(!dir.exists()){
+                                    dir.mkdir();
+                                    Toast.makeText(MainPage.this, "Directory Created " +DIR_PATH, Toast.LENGTH_SHORT).show();
                                 }
 
-                                alertDialog.dismiss();
+                                File file = new File(DIR_PATH, title + "_Form.json");
+                                try {
 
-                                Intent intent = new Intent(getApplicationContext(), CreateForm.class);
-                                intent.putExtra("title", title);
-                                intent.putExtra("description", description);
-                                startActivity(intent);
+                                    JSONObject jsonObj = new JSONObject();
+
+                                    Date c = Calendar.getInstance().getTime();
+                                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+                                    String formattedDate = df.format(c);
+
+                                    jsonObj.put("title", title);
+                                    jsonObj.put("description", description);
+                                    jsonObj.put("author", author);
+                                    jsonObj.put("date", formattedDate);
+
+
+                                    JSONArray type = new JSONArray();
+
+                                    JSONObject edittext = new JSONObject();
+
+                                    edittext.put("type", "EditText");
+                                    edittext.put("title", "NULL");
+                                    type.put(0,edittext);
+
+                                    jsonObj.put("type", type);
+
+                                    String data = jsonObj.toString();
+
+                                    FileOutputStream fos = new FileOutputStream(file);
+                                    fos.write(data.getBytes());
+                                    fos.close();
+                                    alertDialog.dismiss();
+
+                                    Intent intent = new Intent(getApplicationContext(), CreateForm.class);
+                                    intent.putExtra("title", title);
+                                    intent.putExtra("description", description);
+                                    startActivity(intent);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(MainPage.this, "File Not Created There was an Internal Error", Toast.LENGTH_SHORT).show();
+
+                                    alertDialog.dismiss();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
                             }
                             else{
                                 Toast.makeText(MainPage.this, "Enter the Details Correctly", Toast.LENGTH_SHORT).show();
