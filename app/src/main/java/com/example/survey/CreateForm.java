@@ -1,16 +1,9 @@
 package com.example.survey;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateForm extends AppCompatActivity {
@@ -23,6 +16,12 @@ public class CreateForm extends AppCompatActivity {
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");
+
+        TextView t1 = findViewById(R.id.title);
+        t1.setText(title);
+        TextView t2 = findViewById(R.id.description);
+        t2.setText(description);
+
 
 
     }
