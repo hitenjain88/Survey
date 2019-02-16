@@ -1,5 +1,7 @@
 package com.example.survey;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -94,6 +96,9 @@ public class navigation_drawer extends AppCompatActivity
         } else if (id == R.id.current_form) {
 
         } else if (id == R.id.create_form) {
+
+            Intent in1 =new Intent(navigation_drawer.this,MainPage.class);
+            startActivity(in1);
 
         } else if (id == R.id.delete_form) {
 
