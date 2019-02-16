@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/Home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/current_form"
+            android:icon="@drawable/ic_description_black_24dp"
+            android:title="@string/current_form" />
+        <item
+            android:id="@+id/create_form"
+            android:icon="@drawable/ic_create_black_24dp"
+            android:title="@string/create_form" />
+        <item
+            android:id="@+id/delete_form"
+            android:icon="@drawable/ic_delete_black_24dp"
+            android:title="@string/delete_form" />
+        <item
+            android:id="@+id/report"
+            android:icon="@drawable/ic_report_black_24dp"
+            android:title="@string/report" />
+        <item
+            android:id="@+id/download"
+            android:icon="@drawable/ic_file_download_black_24dp"
+            android:title="@string/download" />
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/settings" />
+
+    </group>
+
+    <item android:title="@string/nav_communicate">
+        <menu>
+            <item
+                android:id="@+id/help"
+                android:icon="@drawable/ic_help_black_24dp"
+                android:title="@string/help" />
+            <item
+                android:id="@+id/share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/share" />
+            <item
+                android:id="@+id/send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/send" />
+
+            <item
+                android:id="@+id/feedback"
+                android:icon="@drawable/ic_feedback_black_24dp"
+                android:title="@string/feedback" />
+        </menu>
+    </item>
+
+</menu>
