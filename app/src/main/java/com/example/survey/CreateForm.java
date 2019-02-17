@@ -1,5 +1,7 @@
 package com.example.survey;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,7 +33,21 @@ public class CreateForm extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(this, "WIP Save or Discard msg box", Toast.LENGTH_SHORT).show();
-        super.onBackPressed();
+        android.app.AlertDialog.Builder con=new AlertDialog.Builder(this);
+        con.setTitle("Exit");
+        con.setMessage("Are you sure");
+        con.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        con.setNegativeButton("Discard", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        con.show();
     }
 }
