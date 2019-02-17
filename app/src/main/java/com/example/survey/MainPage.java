@@ -189,7 +189,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
             }
         });
-
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,7 +206,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ActivityCompat.requestPermissions(MainPage.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
-
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

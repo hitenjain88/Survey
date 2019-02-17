@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".CreateForm">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/top">
+        android:id="@+id/linearlayout">
 
         <TextView
             android:layout_width="wrap_content"
@@ -20,6 +21,7 @@
             android:id="@+id/title"
             android:layout_gravity="center"
             tools:ignore="HardcodedText" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,18 +30,32 @@
             android:textSize="25sp"
             android:id="@+id/description"
             tools:ignore="HardcodedText" />
-    </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/top"
-        android:id="@+id/recycle"
-        android:scrollbars="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="+"
+                android:textSize="30sp"
+                android:id="@+id/btn_add"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="-"
+                android:textSize="30sp"
+                android:id="@+id/btn_del"/>
+
+        </LinearLayout>
 
 
+         </LinearLayout>
 
-
-    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
