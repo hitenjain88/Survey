@@ -33,10 +33,6 @@
         <activity android:name=".SplashScreen" />
 
 
-        <activity
-            android:name=".navigation_drawer"
-            android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

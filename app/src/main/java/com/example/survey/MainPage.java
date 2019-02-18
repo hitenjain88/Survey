@@ -225,11 +225,4 @@ public class MainPage extends AppCompatActivity {
             }
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(this, "kaam chalu hai", Toast.LENGTH_SHORT).show();
-        super.onBackPressed();
-
-    }
 }
