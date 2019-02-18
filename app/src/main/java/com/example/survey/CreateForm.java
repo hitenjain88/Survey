@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -16,25 +18,35 @@ import android.widget.Toast;
 public class CreateForm extends AppCompatActivity{
 
     private LinearLayout parentLinearLayout;
-    private Button btn_add, btn_del;
+    private Button btn_add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_form);
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        this.setContentView(R.layout.activity_create_form);
         parentLinearLayout = findViewById(R.id.linearlayout);
 
         btn_add = findViewById(R.id.btn_add);
-        btn_del = findViewById(R.id.btn_del);
 
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
+        setTitle(title);
+
         String description = intent.getStringExtra("description");
 
-        TextView t1 = findViewById(R.id.title);
-        t1.setText(title);
+        //TextView t1 = findViewById(R.id.title);
+        //t1.setText(title);
+        //t1.setVisibility(View.INVISIBLE);
         TextView t2 = findViewById(R.id.description);
-        t2.setText(description);
+        String t = "Description : " + description;
+        t2.setMaxLines(3);
+        t2.setText(t);
 
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,28 +56,24 @@ public class CreateForm extends AppCompatActivity{
 
             }
         });
-        btn_del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                View mview = findViewById(R.id.linearlayout);
-                onDelete(mview);
-
-            }
-        });
     }
 
     public void onAddField(View v) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.field_edittext, null);
+        Button remove = rowView.findViewById(R.id.btn_remove);
+
+
         // Add the new row before the add field button.
         parentLinearLayout.addView(rowView);
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentLinearLayout.removeView(rowView);
+            }
+        });
     }
-
-    public void onDelete(View v) {
-        parentLinearLayout.removeView((View) v.getParent());
-    }
-
 
     @Override
     public void onBackPressed() {

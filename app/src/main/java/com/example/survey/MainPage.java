@@ -69,9 +69,6 @@ public class MainPage extends AppCompatActivity {
                         .setAction("Action", null).show();*/
 
 
-
-               Intent in = new Intent(MainPage.this,navigation_drawer.class);
-               startActivity(in);
             }
         });
 
