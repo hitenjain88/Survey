@@ -1,52 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".CreateForm">
-
+    tools:context=".CreateForm"
+    >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:id="@+id/linearlayout">
+        >
 
-      <!-- <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="default"
-            android:textSize="35sp"
-            android:id="@+id/title"
-            android:layout_gravity="center"
-            tools:ignore="HardcodedText" />-->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="default"
-            android:textSize="15sp"
-            android:id="@+id/description"
-            tools:ignore="HardcodedText" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/horizontal_line"/>
+            android:orientation="vertical"
+            android:id="@+id/linearlayout">
 
-         </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="default"
+                android:textSize="15sp"
+                android:id="@+id/description"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/horizontal_line"/>
+
+        </LinearLayout>
 
 
-    <Button
-        android:layout_marginTop="10dp"
-        android:layout_gravity="right"
-        android:layout_width="wrap_content"
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="+"
+            android:textSize="30sp"
+            android:id="@+id/btn_add"/>
+
+    </LinearLayout>
+
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="+"
-        android:textSize="30sp"
-        android:id="@+id/btn_add"/>
+        android:layout_width="wrap_content"
+        app:fab_addButtonColorNormal="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/float_add_layout"
+        >
 
-</LinearLayout>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_radio_button_24dp"
+            app:fab_colorNormal="#00C2FF"
+            android:id="@+id/float_radio"
+            />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_box_black_24dp"
+            app:fab_colorNormal="#00C2FF"
+            android:id="@+id/float_check"
+            />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_multi_24dp"
+            app:fab_colorNormal="#00C2FF"
+            android:id="@+id/float_multi"
+            />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit_text_black_24dp"
+            app:fab_colorNormal="#00C2FF"
+            android:id="@+id/float_edit_text"
+            />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+
+
+</RelativeLayout>
