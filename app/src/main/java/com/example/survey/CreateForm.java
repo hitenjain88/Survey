@@ -1,7 +1,9 @@
 package com.example.survey;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -77,7 +79,25 @@ public class CreateForm extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(this, "WIP Save or Discard msg box", Toast.LENGTH_SHORT).show();
-        super.onBackPressed();
+        AlertDialog.Builder al=new AlertDialog.Builder(this);
+        al.setTitle("Exit");
+        al.setMessage("Saving Form?");
+        al.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+            }
+        });
+        al.setNegativeButton("Discard", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(CreateForm.this, "SIH 2019", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        al.setCancelable(false);
+        al.show();
+
     }
 }
