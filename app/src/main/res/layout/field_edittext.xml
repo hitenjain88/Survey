@@ -10,11 +10,12 @@
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:orientation="horizontal">
-    <EditText
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textview"
-        android:text="Tap To Edit"
+        android:id="@+id/text_view"
+        android:text="Sample Text"
         android:textSize="25sp"
         android:layout_weight="0.8"/>
 
@@ -26,12 +27,15 @@
         android:text="X"/>
 
 </LinearLayout>
-    <EditText
+    <TextView
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:editable="false"
-        android:hint="A Short Answer"/>
+        android:layout_height="50dp"
+        android:text="Enter your Answer Here"
+        android:background="@drawable/box"/>
 
 
 
