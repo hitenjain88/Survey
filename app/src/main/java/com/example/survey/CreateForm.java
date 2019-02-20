@@ -3,6 +3,7 @@ package com.example.survey;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -18,17 +19,21 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class CreateForm extends AppCompatActivity{
 
     private LinearLayout parentLinearLayout;
-    private Button btn_add;
     private FloatingActionButton float_radio, float_check, float_multi, float_edit_text;
-    private Animation FabOpen, FabClose, FabRClockwise, FabARClockwise;
     private boolean isOpen = false;
 
 
@@ -44,7 +49,7 @@ public class CreateForm extends AppCompatActivity{
         this.setContentView(R.layout.activity_create_form);
         parentLinearLayout = findViewById(R.id.linearlayout);
 
-        btn_add = findViewById(R.id.btn_add);
+        //btn_add = findViewById(R.id.btn_add);
         //float_add = findViewById(R.id.float_add_layout);
         float_check = findViewById(R.id.float_check);
         float_radio = findViewById(R.id.float_radio);
@@ -66,17 +71,18 @@ public class CreateForm extends AppCompatActivity{
         t2.setMaxLines(3);
         t2.setText(t);
 
-        btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onAddField(getCurrentFocus());
-            }
-        });
-
         float_edit_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CreateForm.this, Edit_Text_Activity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        float_radio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateForm.this, Radio_Button_Activity.class);
                 startActivityForResult(intent, 1);
             }
         });
@@ -118,7 +124,7 @@ public class CreateForm extends AppCompatActivity{
         if(requestCode == 1){
 
             if(resultCode == 201){
-                String edittext= data.getStringExtra("question");
+                String edittext=data.getStringExtra("question");
 
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View rowView = inflater.inflate(R.layout.field_edittext, null);
@@ -136,6 +142,54 @@ public class CreateForm extends AppCompatActivity{
                         parentLinearLayout.removeView(rowView);
                     }
                 });
+
+            }
+
+            if(resultCode == 202){
+
+                String json = data.getStringExtra("json");
+                Toast.makeText(this, json + " WORING", Toast.LENGTH_SHORT).show();
+                try {
+
+                    JSONObject jsonObj = new JSONObject(json);
+                    String question = jsonObj.get("question").toString();
+
+                    JSONArray jsonArray = jsonObj.getJSONArray("group");
+
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    final View rowView = inflater.inflate(R.layout.field_radio, null);
+
+                    Button remove = rowView.findViewById(R.id.btn_remove);
+                    final TextView textView = rowView.findViewById(R.id.field_radio_text);
+                    textView.setText(question);
+                    RadioGroup rg = rowView.findViewById(R.id.field_radio_group);
+
+                    int len = jsonArray.length();
+
+
+                    RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+
+                    for(int j=0; j<len; j++)
+                    {
+                        JSONObject o = jsonArray.getJSONObject(j);
+                        String title = o.getString("title");
+                        final RadioButton radioButton = new RadioButton(CreateForm.this);
+                        radioButton.setText(title);
+                        radioButton.setTextColor(Color.rgb(0, 0, 0));
+                        rg.addView(radioButton, params);
+                    }
+
+                    parentLinearLayout.addView(rowView);
+                    remove.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            parentLinearLayout.removeView(rowView);
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
 
