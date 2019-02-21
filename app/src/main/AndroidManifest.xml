@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Edit_Text_Activity"></activity>
+        <activity android:name=".Radio_Button_Activity"></activity>
+        <activity android:name=".Testing" />
+        <activity android:name=".Edit_Text_Activity" />
         <activity android:name=".CreateForm" />
         <activity
             android:name=".MainPage"

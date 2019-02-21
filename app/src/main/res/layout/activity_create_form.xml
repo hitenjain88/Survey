@@ -35,17 +35,6 @@
 
         </LinearLayout>
 
-
-        <Button
-            android:layout_marginTop="10dp"
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="+"
-            android:textSize="30sp"
-            android:id="@+id/btn_add"/>
-
     </LinearLayout>
 
 

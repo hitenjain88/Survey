@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Edit_Text_Activity extends AppCompatActivity {
 
     TextView questionText;
@@ -45,14 +48,26 @@ public class Edit_Text_Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        returnResult();
+        try {
+            returnResult();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public void returnResult(){
+    public void returnResult() throws JSONException {
         Intent intent = new Intent();
         value = questionText.getText().toString();
+
         intent.putExtra("question", value);
+        JSONObject obj = new JSONObject();
+
+        obj.put("type", "EditText");
+        obj.put("question", value);
+
+        intent.putExtra("json", obj.toString());
+
         setResult(201,intent);
         finish();
 
