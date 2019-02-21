@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -83,6 +84,14 @@ public class CreateForm extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CreateForm.this, Radio_Button_Activity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        float_check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateForm.this, Check_Box_Activity.class);
                 startActivityForResult(intent, 1);
             }
         });
@@ -194,6 +203,50 @@ public class CreateForm extends AppCompatActivity{
             }
 
 
+            if(resultCode == 203){
+
+                String json = data.getStringExtra("json");
+                Toast.makeText(this, json + " WORING", Toast.LENGTH_SHORT).show();
+                try {
+
+                    JSONObject jsonObj = new JSONObject(json);
+                    String question = jsonObj.get("question").toString();
+
+                    JSONArray jsonArray = jsonObj.getJSONArray("group");
+
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    final View rowView = inflater.inflate(R.layout.field_checkbox, null);
+
+                    Button remove = rowView.findViewById(R.id.btn_remove);
+                    final TextView textView = rowView.findViewById(R.id.field_check_text);
+                    textView.setText(question);
+                    LinearLayout ll = rowView.findViewById(R.id.field_check_linearlayout);
+
+                    int len = jsonArray.length();
+
+                    for(int j=0; j<len; j++)
+                    {
+                        JSONObject o = jsonArray.getJSONObject(j);
+                        String title = o.getString("title");
+                        final CheckBox cb = new CheckBox(CreateForm.this);
+                        cb.setText(title);
+                        cb.setTextColor(Color.rgb(0, 0, 0));
+                        ll.addView(cb);
+                    }
+
+                    parentLinearLayout.addView(rowView);
+                    remove.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            parentLinearLayout.removeView(rowView);
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
 
         }
     }
