@@ -5,11 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Animatable;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -31,21 +33,34 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class CreateForm extends AppCompatActivity{
 
     private LinearLayout parentLinearLayout;
     private FloatingActionButton float_radio, float_check, float_multi, float_edit_text;
     private boolean isOpen = false;
-
-
+    private String DIR_PATH;
+    private String name, desc, js;
+    private ArrayList<JSONObject> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        list = new ArrayList<JSONObject>();
 
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        DIR_PATH = Environment.getExternalStorageDirectory() + "/SurveyApp"; //PATH OF Internal STORAGE FOR FORM and JSON
 
         this.setContentView(R.layout.activity_create_form);
         parentLinearLayout = findViewById(R.id.linearlayout);
@@ -59,10 +74,14 @@ public class CreateForm extends AppCompatActivity{
 
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
+        name = title;
         setTitle(title);
 
 
         String description = intent.getStringExtra("description");
+        desc = description;
+        String json = intent.getStringExtra("json");
+        js = json;
 
         //TextView t1 = findViewById(R.id.title);
         //t1.setText(title);
@@ -96,10 +115,13 @@ public class CreateForm extends AppCompatActivity{
             }
         });
 
-    }
-
-    public void onAddField(View v) {
-
+        float_multi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateForm.this, Multi_Text_Activity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
     }
 
     @Override
@@ -110,8 +132,15 @@ public class CreateForm extends AppCompatActivity{
         al.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                try {
+                    FetchJson();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 dialog.dismiss();
-
+                finish();
             }
         });
         al.setNegativeButton("Discard", new DialogInterface.OnClickListener() {
@@ -134,34 +163,49 @@ public class CreateForm extends AppCompatActivity{
 
             if(resultCode == 201){
                 String edittext=data.getStringExtra("question");
+                final String json = data.getStringExtra("json");
 
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final View rowView = inflater.inflate(R.layout.field_edittext, null);
 
-                Button remove = rowView.findViewById(R.id.btn_remove);
-                final TextView textView = rowView.findViewById(R.id.text_view);
+                try {
+                    final JSONObject object = new JSONObject(json);
+                    list.add(object);
 
-                textView.setText(edittext);
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    final View rowView = inflater.inflate(R.layout.field_edittext, null);
 
-                // Add the new row before the add field button.
-                parentLinearLayout.addView(rowView);
-                remove.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        parentLinearLayout.removeView(rowView);
-                    }
-                });
+                    Button remove = rowView.findViewById(R.id.btn_remove);
+                    final TextView textView = rowView.findViewById(R.id.text_view);
+
+                    textView.setText(edittext);
+
+                    // Add the new row before the add field button.
+                    parentLinearLayout.addView(rowView);
+                    remove.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            parentLinearLayout.removeView(rowView);
+                            list.remove(object);
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
 
             if(resultCode == 202){
 
-                String json = data.getStringExtra("json");
+                final String json = data.getStringExtra("json");
                 Toast.makeText(this, json + " WORING", Toast.LENGTH_SHORT).show();
+
+
                 try {
 
-                    JSONObject jsonObj = new JSONObject(json);
+                    final JSONObject jsonObj = new JSONObject(json);
+                    list.add(jsonObj);
                     String question = jsonObj.get("question").toString();
+
 
                     JSONArray jsonArray = jsonObj.getJSONArray("group");
 
@@ -192,6 +236,7 @@ public class CreateForm extends AppCompatActivity{
                     remove.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            list.remove(jsonObj);
                             parentLinearLayout.removeView(rowView);
                         }
                     });
@@ -209,7 +254,8 @@ public class CreateForm extends AppCompatActivity{
                 Toast.makeText(this, json + " WORING", Toast.LENGTH_SHORT).show();
                 try {
 
-                    JSONObject jsonObj = new JSONObject(json);
+                    final JSONObject jsonObj = new JSONObject(json);
+                    list.add(jsonObj);
                     String question = jsonObj.get("question").toString();
 
                     JSONArray jsonArray = jsonObj.getJSONArray("group");
@@ -239,6 +285,7 @@ public class CreateForm extends AppCompatActivity{
                         @Override
                         public void onClick(View v) {
                             parentLinearLayout.removeView(rowView);
+                            list.remove(jsonObj);
                         }
                     });
 
@@ -249,5 +296,72 @@ public class CreateForm extends AppCompatActivity{
             }
 
         }
+
+        if(resultCode == 204){
+            String edittext=data.getStringExtra("question");
+            String json=data.getStringExtra("json");
+
+            try {
+                final JSONObject obj = new JSONObject(json);
+                list.add(obj);
+
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View rowView = inflater.inflate(R.layout.field_multiline, null);
+
+                Button remove = rowView.findViewById(R.id.btn_remove);
+                final TextView textView = rowView.findViewById(R.id.text_view);
+
+                textView.setText(edittext);
+
+                // Add the new row before the add field button.
+                parentLinearLayout.addView(rowView);
+                remove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        parentLinearLayout.removeView(rowView);
+                        list.remove(obj);
+
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+        }
+    }
+
+    public void FetchJson() throws JSONException, IOException {
+        JSONObject json = new JSONObject(js);
+
+
+        JSONObject jsonObj = new JSONObject();
+
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+        String formattedDate = df.format(c);
+        jsonObj.put("title", name);
+        jsonObj.put("description", desc);
+        jsonObj.put("date", formattedDate);
+
+        JSONArray type = new JSONArray();
+
+
+        for(int i = 0;i < list.size();i++){
+            JSONObject obj = list.get(i);
+            type.put(i, obj);
+        }
+
+        jsonObj.put("type", type);
+        String data = jsonObj.toString();
+        Log.v("json2", data);
+
+        File file = new File(DIR_PATH, name + "_Form.json");
+
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(data.getBytes());
+        fos.close();
     }
 }

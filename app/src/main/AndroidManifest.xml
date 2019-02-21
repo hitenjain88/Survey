@@ -13,14 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Radio_Button_Activity"
-            android:label="Radio Button"></activity>
+        <activity android:name=".Multi_Text_Activity"></activity>
+        <activity android:name=".Check_Box_Activity" />
+        <activity android:name=".Radio_Button_Activity" />
         <activity android:name=".Testing" />
-        <activity android:name=".Edit_Text_Activity"
-            android:label="Edit text"/>
+        <activity android:name=".Edit_Text_Activity" />
         <activity android:name=".CreateForm" />
-        <activity android:name=".Check_Box_Activity"
-            android:label="CheckBox"/>
         <activity
             android:name=".MainPage"
             android:label="@string/title_activity_main_page"
