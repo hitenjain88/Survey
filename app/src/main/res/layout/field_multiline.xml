@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="wrap_content"
     android:id="@+id/linear_layout_edit_text"
-    android:orientation="horizontal"
-    android:layout_weight="1">
+    android:orientation="vertical">
 
-
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.8"
-        android:id="@+id/edittext">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-        <android.support.design.widget.TextInputEditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="title" />
-    </android.support.design.widget.TextInputLayout>
+            android:id="@+id/text_view"
+            android:text="Sample Text"
+            android:textSize="25sp"
+            android:layout_weight="0.8"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_remove"
-        android:text="X"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_remove"
+            android:layout_weight="0.2"
+            android:text="X"/>
+
+    </LinearLayout>
+    <TextView
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Enter your Answer Here"
+        android:maxLines="4"
+        android:background="@drawable/box"/>
+
+
 
 </LinearLayout>
