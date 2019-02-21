@@ -52,8 +52,8 @@ public class MainPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
-       // Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         DIR_PATH = Environment.getExternalStorageDirectory() + "/SurveyApp"; //PATH OF Internal STORAGE FOR FORM and JSON
 
@@ -132,12 +132,6 @@ public class MainPage extends AppCompatActivity {
 
                                     JSONArray type = new JSONArray();
 
-                                    JSONObject edittext = new JSONObject();
-
-                                    edittext.put("type", "EditText");
-                                    edittext.put("title", "NULL");
-                                    type.put(0,edittext);
-
                                     jsonObj.put("type", type);
 
                                     String data = jsonObj.toString();
@@ -150,6 +144,7 @@ public class MainPage extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), CreateForm.class);
                                     intent.putExtra("title", title);
                                     intent.putExtra("description", description);
+                                    intent.putExtra("json", data);
                                     startActivity(intent);
                                 } catch (IOException e) {
                                     e.printStackTrace();
