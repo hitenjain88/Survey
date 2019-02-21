@@ -2,27 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:id="@+id/linear_layout_edit_text"
-    android:orientation="horizontal"
-    android:layout_weight="1">
+    android:id="@+id/linear_layout_check_box"
+    android:orientation="vertical">
 
-
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.8"
-        android:id="@+id/edittext">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        >
 
-        <android.support.design.widget.TextInputEditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="title" />
-    </android.support.design.widget.TextInputLayout>
+            android:text="Sample Question"
+            android:textSize="25sp"
+            android:layout_weight="0.8"
+            android:id="@+id/field_check_text"/>
 
-    <Button
-        android:layout_width="wrap_content"
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_remove"
+            android:layout_weight="0.2"
+            android:text="X"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_remove"
-        android:text="X"/>
+        android:id="@+id/field_check_linearlayout"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
 
 </LinearLayout>
