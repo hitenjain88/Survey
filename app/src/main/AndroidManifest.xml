@@ -20,16 +20,16 @@
         <activity android:name=".Edit_Text_Activity" />
         <activity android:name=".CreateForm" />
         <activity
-            android:name=".MainPage"
-            android:label="@string/title_activity_main_page"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashScreen" />
+        <activity android:name=".MainPage"
+            android:label="@string/title_activity_main_page"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

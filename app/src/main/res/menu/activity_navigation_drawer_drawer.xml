@@ -2,7 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/Home"
@@ -37,19 +36,6 @@
 
     <item android:title="@string/nav_communicate">
         <menu>
-            <item
-                android:id="@+id/help"
-                android:icon="@drawable/ic_help_black_24dp"
-                android:title="@string/help" />
-            <item
-                android:id="@+id/share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/share" />
-            <item
-                android:id="@+id/send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/send" />
-
             <item
                 android:id="@+id/feedback"
                 android:icon="@drawable/ic_feedback_black_24dp"

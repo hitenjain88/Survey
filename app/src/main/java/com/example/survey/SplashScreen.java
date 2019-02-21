@@ -3,6 +3,7 @@ package com.example.survey;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.TooltipCompat;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -10,6 +11,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
 
 
         Thread th = new Thread(ru);
@@ -25,7 +27,7 @@ public class SplashScreen extends AppCompatActivity {
             {
                 e.printStackTrace();
             }
-            Intent in = new Intent(SplashScreen.this,CreateForm.class);
+            Intent in = new Intent(SplashScreen.this,MainPage.class);
             startActivity(in);
             finish();
 
