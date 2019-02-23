@@ -56,6 +56,7 @@
             android:layout_height="match_parent"
             android:scaleType="center"
             android:src="@drawable/create_form"
+            android:id="@+id/b1"
             />
 
         <TextView
@@ -89,6 +90,7 @@
             android:layout_height="match_parent"
             android:scaleType="center"
             android:src="@drawable/create_form"
+            android:id="@+id/b2"
             />
 
         <TextView
