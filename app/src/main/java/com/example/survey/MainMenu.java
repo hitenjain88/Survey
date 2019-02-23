@@ -15,7 +15,9 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.internal.NavigationMenuItemView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -101,6 +103,15 @@ public class MainMenu extends AppCompatActivity  {
         ImageButton b1 = findViewById(R.id.b1);
         //Existing Form Button
         ImageButton b2 = findViewById(R.id.b2);
+
+        FloatingActionButton fab = findViewById(R.id.fab_recent);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         b1.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("InflateParams")

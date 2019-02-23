@@ -62,5 +62,22 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|right">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:src="@drawable/ic_create_black_24dp"
+            app:backgroundTint="@android:color/black"/>
+
+    </RelativeLayout>
+
 
 </android.support.v4.widget.DrawerLayout>
