@@ -334,8 +334,7 @@ public class CreateForm extends AppCompatActivity{
     }
 
     public void FetchJson() throws JSONException, IOException {
-        JSONObject json = new JSONObject(js);
-
+        //JSONObject json = new JSONObject(js);
 
         JSONObject jsonObj = new JSONObject();
 
