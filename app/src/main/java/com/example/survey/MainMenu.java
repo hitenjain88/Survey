@@ -210,9 +210,8 @@ public class MainMenu extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainMenu.this,MainMenu.class);
+                Intent intent = new Intent(MainMenu.this,Existing.class);
                 startActivity(intent);
-                Toast.makeText(MainMenu.this, "WIP abhi kaam baki h", Toast.LENGTH_SHORT).show();
             }
         });
     }

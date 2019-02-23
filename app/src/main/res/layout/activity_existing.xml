@@ -38,21 +38,29 @@
 
         </com.github.florent37.shapeofview.shapes.ArcView>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.v4.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <android.support.v4.widget.NestedScrollView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        </android.support.v4.widget.NestedScrollView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical">
+
+
+                </android.support.v7.widget.RecyclerView>
+
+            </android.support.v4.widget.NestedScrollView>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-
 
 
 </android.support.v4.widget.DrawerLayout>
