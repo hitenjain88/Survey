@@ -13,23 +13,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Multi_Text_Activity"></activity>
+        <activity android:name=".Existing"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".MainMenu"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ActivityDirectory" />
+        <activity android:name=".Multi_Text_Activity" />
         <activity android:name=".Check_Box_Activity" />
         <activity android:name=".Radio_Button_Activity" />
         <activity android:name=".Testing" />
         <activity android:name=".Edit_Text_Activity" />
         <activity android:name=".CreateForm" />
-        <activity
-            android:name=".SplashScreen">
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainPage"
+        <activity
+            android:name=".MainPage"
             android:label="@string/title_activity_main_page"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

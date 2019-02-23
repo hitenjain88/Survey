@@ -220,7 +220,7 @@ public class MainPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainPage.this,Testing.class);
+                Intent intent = new Intent(MainPage.this,MainMenu.class);
                 startActivity(intent);
                 Toast.makeText(MainPage.this, "WIP abhi kaam baki h", Toast.LENGTH_SHORT).show();
             }
