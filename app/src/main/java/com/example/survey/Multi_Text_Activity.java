@@ -57,7 +57,7 @@ public class Multi_Text_Activity extends AppCompatActivity {
         intent.putExtra("question", value);
         JSONObject obj = new JSONObject();
 
-        obj.put("type", "EditText");
+        obj.put("type", "MultiEditText");
         obj.put("question", value);
 
         intent.putExtra("json", obj.toString());
