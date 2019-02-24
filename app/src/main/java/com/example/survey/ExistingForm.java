@@ -89,6 +89,7 @@ public class ExistingForm extends AppCompatActivity {
                     case "CheckBox" : SetCheckBox(j);
                     break;
                     case "MultiEditText" : SetMultiEditText(j);
+                    break;
                 }
 
             }
@@ -169,23 +170,29 @@ public class ExistingForm extends AppCompatActivity {
 
             if(resultCode == 201){
                 String edittext=data.getStringExtra("question");
+                boolean imag = data.getBooleanExtra("image",false);
                 final String json = data.getStringExtra("json");
 
 
                 try {
                     final JSONObject object = new JSONObject(json);
                     list.add(object);
-                    Log.v("testing", list.size()+" ");
+
                     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     final View rowView = inflater.inflate(R.layout.field_edittext, null);
 
                     Button remove = rowView.findViewById(R.id.btn_remove);
+                    Button image_answer = rowView.findViewById(R.id.btn_add_image_field_edit_text);
                     final TextView textView = rowView.findViewById(R.id.text_view);
+
 
                     textView.setText(edittext);
 
                     // Add the new row before the add field button.
                     parentLinearLayout.addView(rowView);
+                    if(imag){
+                        image_answer.setVisibility(View.VISIBLE);
+                    }
                     remove.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -453,7 +460,7 @@ public class ExistingForm extends AppCompatActivity {
 
     private void SetEditText(JSONObject j) throws JSONException {
         String edittext=j.getString("question");
-
+        boolean imag = j.getBoolean("image");
         final JSONObject object = j;
         list.add(object);
         Log.v("testing1", j.toString());
@@ -461,7 +468,11 @@ public class ExistingForm extends AppCompatActivity {
         final View rowView = inflater.inflate(R.layout.field_edittext, null);
 
         Button remove = rowView.findViewById(R.id.btn_remove);
+        Button image_answer = rowView.findViewById(R.id.btn_add_image_field_edit_text);
         final TextView textView = rowView.findViewById(R.id.text_view);
+        if(imag){
+            image_answer.setVisibility(View.VISIBLE);
+        }
 
         textView.setText(edittext);
 

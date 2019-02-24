@@ -11,7 +11,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,14 +25,19 @@ import org.json.JSONObject;
 public class Edit_Text_Activity extends AppCompatActivity {
 
     TextView questionText;
+    Switch image_switch;
     String value,s1;
+    Button btn_image;
+    boolean imag;
     int flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit__text_);
-
-
+        image_switch = findViewById(R.id.switch1);
+        btn_image = findViewById(R.id.btn_add_image_edit_text);
+        imag = false;
+        image_switch.setChecked(false);
         final EditText question = findViewById(R.id.question_edit_text);
         questionText = findViewById(R.id.question);
 
@@ -54,6 +61,20 @@ public class Edit_Text_Activity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        image_switch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(imag){
+                imag = false;
+                    btn_image.setVisibility(View.GONE);
+                }else{
+                    btn_image.setVisibility(View.VISIBLE);
+                    imag = true;
+                }
 
             }
         });
@@ -97,8 +118,10 @@ public class Edit_Text_Activity extends AppCompatActivity {
         JSONObject obj = new JSONObject();
 
         obj.put("type", "EditText");
+        obj.put("image", imag);
         obj.put("question", value);
 
+        intent.putExtra("image", imag);
         intent.putExtra("json", obj.toString());
 
         setResult(201,intent);

@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter Your Question"
+            android:textColorHint="#fff"
             app:met_primaryColor="@color/colorAccent"
             android:maxLines="2"
             app:met_maxCharacters="40"
@@ -30,7 +31,20 @@
             app:met_floatingLabel="highlight"
             android:id="@+id/question_edit_text"
             />
+
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable for reply using Image"
+        android:textSize="20dp"/>
+
+    <Switch
+        android:padding="10dp"
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enable Photo Answer" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,6 +80,19 @@
             android:layout_height="50dp"
             android:text="Enter your Answer Here"
             android:background="@drawable/box"/>
+
+        <Button
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_add_image_edit_text"
+            android:visibility="gone"
+            android:text="Input Image"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_edit"/>
 
     </LinearLayout>
 

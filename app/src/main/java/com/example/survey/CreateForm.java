@@ -163,6 +163,7 @@ public class CreateForm extends AppCompatActivity{
 
             if(resultCode == 201){
                 String edittext=data.getStringExtra("question");
+                boolean imag = data.getBooleanExtra("image",false);
                 final String json = data.getStringExtra("json");
 
 
@@ -174,12 +175,17 @@ public class CreateForm extends AppCompatActivity{
                     final View rowView = inflater.inflate(R.layout.field_edittext, null);
 
                     Button remove = rowView.findViewById(R.id.btn_remove);
+                    Button image_answer = rowView.findViewById(R.id.btn_add_image_field_edit_text);
                     final TextView textView = rowView.findViewById(R.id.text_view);
+
 
                     textView.setText(edittext);
 
                     // Add the new row before the add field button.
                     parentLinearLayout.addView(rowView);
+                    if(imag){
+                        image_answer.setVisibility(View.VISIBLE);
+                    }
                     remove.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
