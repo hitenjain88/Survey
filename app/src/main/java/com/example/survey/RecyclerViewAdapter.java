@@ -56,6 +56,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Log.d("TAG", "onBind");
         final int position = i;
         viewHolder.title.setText(mTitle.get(i));
+        final String name = mTitle.get(i);
         viewHolder.directory.setText(mDirectory.get(i));
         final String directory2 = mDirectory.get(i);
         viewHolder.btn_edit.setOnClickListener(new View.OnClickListener() {
@@ -101,12 +102,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
                 File file = new File(directory2);
+
                 ExplosionField explosionField = ExplosionField.attach2Window((Activity) mContext);
                 explosionField.explode(viewHolder.parentlayout);
                 mTitle.remove(position);
                 mDirectory.remove(position);
                 notifyItemRangeRemoved(position,mTitle.size());
                 notifyDataSetChanged();
+
+                boolean deleted = file.delete();
+                if(deleted){
+                    Toast.makeText(mContext, name+"Deleted", Toast.LENGTH_SHORT).show();
+                }else
+                    Toast.makeText(mContext, "Something went Wrong", Toast.LENGTH_SHORT).show();
+
             }
         });
 
