@@ -28,6 +28,7 @@
         android:layout_height="50dp"
         android:maxLines="1"
         android:maxLength="40"
+        android:id="@+id/field_fill_edit_text_value"
         android:hint="Enter your Answer Here"
         android:background="@drawable/box"/>
 

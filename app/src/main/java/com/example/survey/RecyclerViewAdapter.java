@@ -57,6 +57,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final int position = i;
         viewHolder.title.setText(mTitle.get(i));
         final String name = mTitle.get(i);
+        //Log.v("testt12", name);
+        final String name2 = name.toLowerCase();
+
+        if(new File(DIR_PATH+"/data/"+name2+".json").exists()){
+            viewHolder.btn_edit.setVisibility(View.INVISIBLE);
+            viewHolder.btn_analytics.setVisibility(View.VISIBLE);
+        }
+
         viewHolder.directory.setText(mDirectory.get(i));
         final String directory2 = mDirectory.get(i);
         viewHolder.btn_edit.setOnClickListener(new View.OnClickListener() {
@@ -184,6 +192,36 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         });
 
 
+        viewHolder.btn_analytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File file = new File(DIR_PATH+"/data/"+name2+".json");
+                Intent intent =new Intent(mContext, Analitics_List.class);
+
+                StringBuilder json = new StringBuilder();
+                BufferedReader br = null;
+                try {
+                    br = new BufferedReader(new FileReader(file));
+
+                    String line;
+
+                    while ((line = br.readLine()) != null) {
+                        json.append(line);
+                    }
+                    br.close();
+
+                    Log.v("READFILE", String.valueOf(json));
+                    intent.putExtra("json", String.valueOf(json));
+                    intent.putExtra("name", name2);
+                    mContext.startActivity(intent);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -193,7 +231,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
             TextView title, directory;
-            Button btn_edit, btn_delete, btn_fill, btn_preview, btn_share;
+            Button btn_edit, btn_delete, btn_fill, btn_preview, btn_share, btn_analytics;
             LinearLayout parentlayout, menu;
 
             public ViewHolder(View itemView){
@@ -206,7 +244,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 btn_delete = itemView.findViewById(R.id.existing_delete);
                 btn_edit = itemView.findViewById(R.id.existing_edit);
                 btn_fill = itemView.findViewById(R.id.existing_fill);
-                btn_share = itemView.findViewById(R.id.existing_fill);
+                btn_share = itemView.findViewById(R.id.existing_share);
+                btn_analytics = itemView.findViewById(R.id.btn_Analytics);
 
 
             }

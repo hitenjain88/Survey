@@ -251,10 +251,12 @@ public class Existing extends AppCompatActivity {
     private void ListDir(File root) {
         File[] files = root.listFiles();
         for(int i = 0; i < files.length; i++){
-            mDirectory.add(files[i].getAbsolutePath());
-            String test = files[i].getName().toUpperCase();
-            test = test.substring(0,1)+test.substring(1, test.length()-10).toLowerCase();
-            mTitle.add(test);
+            if(files[i].getName().contains(".json")) {
+                mDirectory.add(files[i].getAbsolutePath());
+                String test = files[i].getName().toUpperCase();
+                test = test.substring(0, 1) + test.substring(1, test.length() - 10).toLowerCase();
+                mTitle.add(test);
+            }
         }
         fileList.clear();
 

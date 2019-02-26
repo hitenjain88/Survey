@@ -3,7 +3,9 @@ package com.example.survey;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,22 +13,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class FormFill extends AppCompatActivity {
 
-    private String DIR_PATH;
+    private String DIR_PATH, DIR_PATH_FILL;
     private String name, desc, js, author;
-
+    private JSONArray jsonParent;
     private LinearLayout parentLinearLayout;
     private ArrayList<View> listView;
     private ArrayList<JSONObject> listJson;
@@ -38,6 +50,7 @@ public class FormFill extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_fill);
+        DIR_PATH_FILL = Environment.getExternalStorageDirectory() + "/SurveyApp/Data"; //PATH OF Internal STORAGE FOR FORM and JSON
 
         listView = new ArrayList<>();
         listJson = new ArrayList<>();
@@ -90,6 +103,20 @@ public class FormFill extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onBackPressed() {
+        try {
+            FetchAllAnswer();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        super.onBackPressed();
     }
 
     private void SetMultiEditText(JSONObject j) throws JSONException {
@@ -200,7 +227,155 @@ public class FormFill extends AppCompatActivity {
         listJson.add(j);
     }
 
-    private void FetchAllAnswer(){
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void FetchAllAnswer() throws JSONException, IOException {
 
+        for(int i = 0; i < listView.size(); i++){
+            View v = listView.get(i);
+            JSONObject jsonObj = listJson.get(i);
+
+            switch(jsonObj.getString("type")) {
+                case "EditText":
+                    fetchEditText(v, jsonObj);
+                    break;
+                case "MultiText":
+                    fetchMultiText(v, jsonObj);
+                    break;
+                case "RadioGroup":
+                    fetchRadioGroup(v, jsonObj);
+                    break;
+                case "CheckBox":
+                    fetchCheckBox(v, jsonObj);
+                    break;
+
+            }
+        }
+        JSONArray jsonArray = new JSONArray();
+        for(int i = 0; i  < listFillJson.size(); i++){
+            jsonArray.put(i, listFillJson.get(i));
+        }
+        JSONObject js = new JSONObject();
+        String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
+
+        File file = new File(DIR_PATH_FILL);
+        File fileWrite;
+        if(!file.exists()){
+            boolean created = file.mkdir();
+        }
+        fileWrite = new File(DIR_PATH_FILL+"/"+name.toLowerCase()+".json");
+        Log.d("Test1", String.valueOf(fileWrite.exists()));
+
+        if(!fileWrite.exists()){
+            boolean created = fileWrite.createNewFile();
+            JSONArray arr = new JSONArray();
+            //int length = arr.length();
+            for(int i = 0; i < listFillJson.size(); i++){
+                arr.put(i, listFillJson.get(i));
+            }
+            jsonParent = new JSONArray();
+            JSONObject obj = new JSONObject();
+            obj.put("1", arr);
+
+            jsonParent.put(0, obj);
+            Log.v("sts", jsonParent.toString());
+
+            File file2 = new File(DIR_PATH_FILL+"/"+ name + ".json");
+
+            FileOutputStream fos = new FileOutputStream(file2);
+            fos.write(jsonParent.toString().getBytes());
+            fos.close();
+        }
+        else{
+            StringBuilder json = new StringBuilder();
+            BufferedReader br = null;
+
+            try {
+                br = new BufferedReader(new FileReader(new File(DIR_PATH_FILL+"/"+name+".json")));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    json.append(line);
+                }
+                br.close();
+                Log.v("Test11", json.toString());
+                //Toast.makeText(this, json.toString(), Toast.LENGTH_LONG).show();
+
+                jsonParent = new JSONArray(json.toString());
+                //Toast.makeText(this, json.toString()+" "+jsonParent2.toString(), Toast.LENGTH_LONG).show();
+
+
+                JSONArray arr = new JSONArray();
+                int length = jsonParent.length();
+                for(int i = 0; i < listFillJson.size(); i++){
+                    arr.put(i, listFillJson.get(i));
+                }
+                JSONObject obj = new JSONObject();
+                int id = jsonParent.length()+1;
+                obj.put(""+id, arr);
+
+                Log.v("Test11", obj.toString());
+                jsonParent.put(id-1,obj);
+                Log.v("Test11", jsonParent.toString());
+                File file2 = new File(DIR_PATH_FILL+"/"+name+".json");
+
+                FileOutputStream fos = new FileOutputStream(file2);
+                fos.write(jsonParent.toString().getBytes());
+                fos.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    private void fetchCheckBox(View v, JSONObject jsonObj) throws JSONException {
+        LinearLayout ll = v.findViewById(R.id.field_fill_check_linear_layout);
+        int count = ll.getChildCount();
+        String str = "";
+        ArrayList<CheckBox> listOfCheckBox = new ArrayList<CheckBox>();
+        for (int i=0;i<count;i++) {
+            View o = ll.getChildAt(i);
+            if (o instanceof CheckBox) {
+                listOfCheckBox.add((CheckBox) o);
+                if(((CheckBox) o).isChecked()){
+                    str = ((CheckBox) o).getText().toString() + " | " + str;
+                }
+            }
+        }
+
+        JSONObject fillJson = new JSONObject();
+        fillJson.put("CheckBox", str);
+        listFillJson.add(fillJson);
+    }
+
+    private void fetchRadioGroup(View v, JSONObject jsonObj) throws JSONException {
+        RadioGroup rg = v.findViewById(R.id.field_fill_radio_group);
+        RadioButton rb = findViewById(rg.getCheckedRadioButtonId());
+        String answer = rb.getText().toString();
+        JSONObject fillJson = new JSONObject();
+        fillJson.put("RadioGroup", answer);
+        listFillJson.add(fillJson);
+    }
+
+    private void fetchMultiText(View v, JSONObject jsonObj) throws JSONException {
+        EditText et = v.findViewById(R.id.answer_fill_multi);
+        String answer = et.getText().toString();
+        JSONObject fillJson = new JSONObject();
+        fillJson.put("MultiText", answer);
+        listFillJson.add(fillJson);
+    }
+
+    private void fetchEditText(View v, JSONObject jsonObject) throws JSONException {
+        boolean imag = jsonObject.getBoolean("image");
+        if(!imag) {
+            EditText et = v.findViewById(R.id.field_fill_edit_text_value);
+            String answer = et.getText().toString();
+            JSONObject fillJson = new JSONObject();
+            fillJson.put("EditText", answer);
+            listFillJson.add(fillJson);
+        }
     }
 }

@@ -34,6 +34,7 @@
         android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:id="@+id/field_edit_text_fill"
         android:text="Enter your Answer Here"
         android:background="@drawable/box"/>
 
