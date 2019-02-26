@@ -72,6 +72,7 @@ public class Existing extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(ContextCompat.checkSelfPermission(Existing.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                     requestStoragePermission();
                 }else{
