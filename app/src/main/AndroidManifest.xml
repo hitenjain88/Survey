@@ -13,12 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Ratings"></activity>
+        <activity android:name=".opinion" />
+        <activity android:name=".feedback" />
         <activity android:name=".PreviewForm"></activity>
         <activity android:name=".FormFill" />
         <activity android:name=".ExistingForm" />
         <activity
             android:name=".Existing"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="Existing Form"
+            android:theme="@style/AppTheme2" />
         <activity android:name=".ActivityDirectory" />
         <activity
             android:name=".Multi_Text_Activity"

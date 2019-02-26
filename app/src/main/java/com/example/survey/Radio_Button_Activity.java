@@ -174,7 +174,7 @@ public class Radio_Button_Activity extends AppCompatActivity {
                     finish();
             }
         });
-        al.setCancelable(false);
+        al.setCancelable(true);
         al.show();
 
 

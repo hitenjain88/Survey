@@ -2,23 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/feedback"
+        android:orderInCategory="100"
+        android:title="Send Feedback"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/exit"
         android:orderInCategory="100"
-        android:title="@string/exit"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/copy"
-        android:orderInCategory="100"
-        android:title="@string/copy"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/paste"
-        android:orderInCategory="100"
-        android:title="@string/paste"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/edit"
-        android:orderInCategory="100"
-        android:title="@string/edit"
+        android:title="Exit"
         app:showAsAction="never" />
 </menu>
