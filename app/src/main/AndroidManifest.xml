@@ -21,21 +21,24 @@
         <activity android:name=".ExistingForm" />
         <activity
             android:name=".Existing"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ActivityDirectory" />
-        <activity android:name=".Multi_Text_Activity"
-            android:theme="@style/AppTheme2"/>
-        <activity android:name=".Check_Box_Activity"
-            android:theme="@style/AppTheme2"/>
-        <activity android:name=".Radio_Button_Activity"
-            android:theme="@style/AppTheme2"/>
+        <activity
+            android:name=".Multi_Text_Activity"
+            android:theme="@style/AppTheme2" />
+        <activity
+            android:name=".Check_Box_Activity"
+            android:theme="@style/AppTheme2" />
+        <activity
+            android:name=".Radio_Button_Activity"
+            android:theme="@style/AppTheme2" />
         <activity android:name=".Testing" />
-        <activity android:name=".Edit_Text_Activity"
-            android:theme="@style/AppTheme2"/>
-        <activity android:name=".CreateForm"
-            android:theme="@style/AppTheme2"/>
+        <activity
+            android:name=".Edit_Text_Activity"
+            android:theme="@style/AppTheme2" />
+        <activity
+            android:name=".CreateForm"
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".MainMenu"
             android:theme="@style/splashScreenTheme">
@@ -45,7 +48,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
