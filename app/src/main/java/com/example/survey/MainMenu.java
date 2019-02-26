@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -67,11 +68,9 @@ public class MainMenu extends AppCompatActivity  {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>SURVEY APP</font>"));
 
-        final DrawerLayout drawerLayout = findViewById(R.id.dl);
+        /*final DrawerLayout drawerLayout = findViewById(R.id.dl);
 
         final ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-
-
 
         NavigationView navigationView = findViewById(R.id.nv);
         actionBarDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
@@ -94,7 +93,7 @@ public class MainMenu extends AppCompatActivity  {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 return false;
             }
-        });
+        });*/
 
 
         DIR_PATH = Environment.getExternalStorageDirectory() + "/SurveyApp"; //PATH OF Internal STORAGE FOR FORM and JSON
@@ -108,10 +107,8 @@ public class MainMenu extends AppCompatActivity  {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                       // .setAction("Action", null).show();
-                Intent i = new Intent(MainMenu.this,feedback.class);
-                startActivity(i);
+                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
 
@@ -227,6 +224,27 @@ public class MainMenu extends AppCompatActivity  {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.navigation_drawer,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.feedback:
+                Intent feed=new Intent(MainMenu.this,feedback.class);
+                startActivity(feed);
+                break;
+            case R.id.exit:
+                finish();
+                System.exit(0);
+                break;
+        }
+        return true;
     }
 
     public void requestStoragePermission(){

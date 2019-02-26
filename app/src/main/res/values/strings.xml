@@ -13,10 +13,6 @@
     <string name="nav_header_desc">Navigation header</string>
 
 
-    <string name="home">Home</string>
-    <string name="current_form">CurrentForm</string>
-    <string name="create_form">CreateForm</string>
-    <string name="delete_form">DeleteForm</string>
     <string name="report">SurveyReport</string>
     <string name="download">Download</string>
     <string name="settings">Settings</string>
