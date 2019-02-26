@@ -20,6 +20,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -58,7 +60,7 @@ public class Existing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_existing);
 
-
+        getSupportActionBar().setElevation(0);
 
         DIR_PATH = Environment.getExternalStorageDirectory() + "/SurveyApp"; //PATH OF Internal STORAGE FOR FORM and JSON
         File root = new File(DIR_PATH);
@@ -170,7 +172,24 @@ public class Existing extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.search:
+                Toast.makeText(this,"search bar",Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
+    }
+
     public void requestStoragePermission(){
+
         if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
             new AlertDialog.Builder(this)
                     .setTitle("Storage Permission Needed")
