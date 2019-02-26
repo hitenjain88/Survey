@@ -168,7 +168,7 @@ public class Check_Box_Activity extends AppCompatActivity {
                 finish();
             }
         });
-        al.setCancelable(false);
+        al.setCancelable(true);
         al.show();
     }
 

@@ -150,7 +150,7 @@ public class CreateForm extends AppCompatActivity{
                 finish();
             }
         });
-        al.setCancelable(false);
+        al.setCancelable(true);
         al.show();
 
     }

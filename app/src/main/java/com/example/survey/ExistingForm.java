@@ -158,7 +158,7 @@ public class ExistingForm extends AppCompatActivity {
                 finish();
             }
         });
-        al.setCancelable(false);
+        al.setCancelable(true);
         al.show();
     }
 

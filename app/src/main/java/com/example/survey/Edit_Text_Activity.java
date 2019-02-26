@@ -106,7 +106,7 @@ public class Edit_Text_Activity extends AppCompatActivity {
                 finish();
             }
         });
-        al.setCancelable(false);
+        al.setCancelable(true);
         al.show();
     }
 
