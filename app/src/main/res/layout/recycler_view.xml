@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:id="@+id/open"
-            android:text="OPEN"/>
+            android:text="Preview"/>
 
     </LinearLayout>
     <TextView
@@ -39,6 +39,47 @@
         android:layout_height="wrap_content"
         android:id="@+id/directory"
         android:text="dirextory"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/existing_menu"
+        android:visibility="gone">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:id="@+id/existing_edit"
+            android:layout_weight="2"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:id="@+id/existing_delete"
+            android:layout_weight="2"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/existing_share"
+            android:text="Share"
+            android:layout_weight="2"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fill"
+            android:id="@+id/existing_fill"
+            android:layout_weight="2"
+            />
+    </LinearLayout>
+
 
 
 </LinearLayout>

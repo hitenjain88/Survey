@@ -1,5 +1,6 @@
 package com.example.survey;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +24,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import tyrantgit.explosionfield.ExplosionField;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
@@ -55,7 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         viewHolder.title.setText(mTitle.get(i));
         viewHolder.directory.setText(mDirectory.get(i));
         final String directory2 = mDirectory.get(i);
-        viewHolder.btn.setOnClickListener(new View.OnClickListener() {
+        viewHolder.btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, mTitle.get(position), Toast.LENGTH_SHORT).show();
@@ -86,6 +89,92 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             }
         });
+
+        viewHolder.parentlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHolder.menu.setVisibility(View.VISIBLE);
+            }
+        });
+
+        viewHolder.btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File file = new File(directory2);
+                ExplosionField explosionField = ExplosionField.attach2Window((Activity) mContext);
+                explosionField.explode(viewHolder.parentlayout);
+                mTitle.remove(position);
+                mDirectory.remove(position);
+                notifyItemRangeRemoved(position,mTitle.size());
+                notifyDataSetChanged();
+            }
+        });
+
+        viewHolder.btn_preview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, mTitle.get(position), Toast.LENGTH_SHORT).show();
+                Intent intent =new Intent(mContext, PreviewForm.class);
+
+                File file = new File(directory2);
+                StringBuilder json = new StringBuilder();
+                BufferedReader br = null;
+                try {
+                    br = new BufferedReader(new FileReader(file));
+
+                    String line;
+
+                    while ((line = br.readLine()) != null) {
+                        json.append(line);
+                    }
+                    br.close();
+
+                    Log.v("READFILE", String.valueOf(json));
+                    intent.putExtra("json", String.valueOf(json));
+                    mContext.startActivity(intent);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        viewHolder.btn_fill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(mContext, mTitle.get(position), Toast.LENGTH_SHORT).show();
+                Intent intent =new Intent(mContext, FormFill.class);
+
+                File file = new File(directory2);
+                StringBuilder json = new StringBuilder();
+                BufferedReader br = null;
+                try {
+                    br = new BufferedReader(new FileReader(file));
+
+                    String line;
+
+                    while ((line = br.readLine()) != null) {
+                        json.append(line);
+                    }
+                    br.close();
+
+                    Log.v("READFILE", String.valueOf(json));
+                    intent.putExtra("json", String.valueOf(json));
+                    mContext.startActivity(intent);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
     }
 
     @Override
@@ -95,15 +184,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
             TextView title, directory;
-            Button btn;
-            LinearLayout parentlayout;
+            Button btn_edit, btn_delete, btn_fill, btn_preview, btn_share;
+            LinearLayout parentlayout, menu;
 
             public ViewHolder(View itemView){
                 super(itemView);
                 title = itemView.findViewById(R.id.name);
                 directory = itemView.findViewById(R.id.directory);
                 parentlayout = itemView.findViewById(R.id.parent_layout);
-                btn = itemView.findViewById(R.id.open);
+                menu = itemView.findViewById(R.id.existing_menu);
+                btn_preview = itemView.findViewById(R.id.open);
+                btn_delete = itemView.findViewById(R.id.existing_delete);
+                btn_edit = itemView.findViewById(R.id.existing_edit);
+                btn_fill = itemView.findViewById(R.id.existing_fill);
+                btn_share = itemView.findViewById(R.id.existing_fill);
+
 
             }
         }
