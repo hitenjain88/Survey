@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+   <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    android:orientation="vertical"
+        tools:context=".feedback">
+
+<android.support.v7.widget.Toolbar
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
+
+           <LinearLayout
+
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+
+               <android.support.v7.widget.AppCompatImageButton
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/image1"
+                   android:layout_weight="1"
+                   android:background="@color/colorPrimary"
+                   android:src="@drawable/ic_arrow_back_black_24dp" />
+
+               <TextView
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="start"
+                   android:layout_weight="5"
+                   android:text="Feedback"
+                   android:background="@color/colorPrimary"
+                   android:textColor="#F5EEEE"
+                   android:textSize="25sp" />
+
+              <!-- <android.support.v7.widget.AppCompatImageButton
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:background="@color/colorPrimary"
+                   android:src="@drawable/ic_send_black_24dp" />-->
+
+           </LinearLayout>
+</android.support.v7.widget.Toolbar>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/i1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:layout_weight="1"
+            android:background="#FAF9F8"
+            android:src="@drawable/ic_message_black_24dp" />
+
+        <Button
+            android:id="@+id/b1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="9"
+            android:background="#FAF9F8"
+            android:text="Your Opinions About Survey"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="23sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <android.support.v7.widget.AppCompatImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/i2"
+            android:layout_marginTop="33dp"
+            android:background="#FAF9F8"
+            android:src="@drawable/ic_star_black_24dp"/>
+
+        <Button
+            android:id="@+id/b2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="9"
+            android:background="#FAF9F8"
+            android:text="Your Ratings To This App"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="23sp" />
+    </LinearLayout>
+
+
+
+</LinearLayout>
