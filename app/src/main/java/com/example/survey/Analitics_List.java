@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ public class Analitics_List extends AppCompatActivity {
     ArrayList<JSONArray> dataset;
     ArrayList<String> answer;
     String name, DIR_PATH;
+    Button btn_analytics;
+    JSONArray temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +46,13 @@ public class Analitics_List extends AppCompatActivity {
         answer = new ArrayList<>();
         dataset = new ArrayList<>();
         DIR_PATH = Environment.getExternalStorageDirectory() + "/SurveyApp"; //PATH OF Internal STORAGE FOR FORM and JSON
-
+        btn_analytics = findViewById(R.id.btn_analytics_list);
 
 
 
         try {
             jsonArray = new JSONArray(json);
-
+            temp = jsonArray;
             for(int i=0; i<jsonArray.length();i++){
                 JSONObject j = jsonArray.getJSONObject(i);
                 Log.v("listlist", j.toString());
@@ -114,5 +117,39 @@ public class Analitics_List extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        btn_analytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File file = new File(DIR_PATH+"/"+name+"_Form.json");
+                Intent intent =new Intent(Analitics_List.this, Activity_Analytics_Show.class);
+
+                StringBuilder json = new StringBuilder();
+                BufferedReader br = null;
+                try {
+                    br = new BufferedReader(new FileReader(file));
+
+                    String line;
+
+                    while ((line = br.readLine()) != null) {
+                        json.append(line);
+                    }
+                    br.close();
+
+                    Log.v("READFILE", String.valueOf(json));
+                    intent.putExtra("json", String.valueOf(json));
+                    intent.putExtra("Answer", temp.toString());
+                    intent.putExtra("name", name);
+                    intent.putExtra("description", new JSONObject(json.toString()).getString("description"));
+                    startActivity(intent);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
     }
 }
