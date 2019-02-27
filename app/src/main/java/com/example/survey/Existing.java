@@ -54,8 +54,11 @@ public class Existing extends AppCompatActivity {
 
     private ArrayList<String> mTitle = new ArrayList<>();
     private ArrayList<String> mDirectory = new ArrayList<>();
-
-
+    private ArrayList<String> actualtitle=new ArrayList<>();
+    private ArrayList<String> actualdir=new ArrayList<>();
+    private ArrayList<String> filteredtitle=new ArrayList<>();
+    private ArrayList<String> filtereddir=new ArrayList<>();
+    private int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +71,8 @@ public class Existing extends AppCompatActivity {
         ListDir(root);
 
         initRecyclerView();
+        actualtitle.addAll(mTitle);
+        actualdir.addAll(mDirectory);
         FloatingActionButton fab = findViewById(R.id.fab_create);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,6 +193,28 @@ public class Existing extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 //adapter.getFilter().filter(newText);
+                filteredtitle.clear();
+                filtereddir.clear();
+                CharSequence constraint=newText.toLowerCase().trim();
+                if(/*constraint==null || */((String)constraint).length()==0){
+                    filteredtitle.addAll(actualtitle);
+                    filtereddir.addAll(actualdir);
+                }
+                else{
+                    for(int i=0;i<actualtitle.size();i++){
+                        if(((actualtitle.get(i)).toLowerCase()).contains(constraint)){
+                            //index=actualtitle.indexOf(item);
+                            filteredtitle.add(actualtitle.get(i));
+                            filtereddir.add(actualdir.get(i));
+                        }
+                    }
+                }
+
+                mTitle.clear();
+                mTitle.addAll(filteredtitle);
+                mDirectory.clear();
+                mDirectory.addAll(filtereddir);
+                initRecyclerView();
                 return false;
             }
         });
