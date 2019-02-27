@@ -13,13 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Analytics_Filled"></activity>
+        <activity android:name=".Activity_Analytics_Show"></activity>
+        <activity android:name=".Analytics_Filled" />
         <activity android:name=".Analitics_List" />
         <activity android:name=".PreviewForm" />
-        <activity android:name=".Ratings"></activity>
+        <activity android:name=".Ratings" />
         <activity android:name=".opinion" />
         <activity android:name=".feedback" />
-        <activity android:name=".PreviewForm"></activity>
+        <activity android:name=".PreviewForm" />
         <activity android:name=".FormFill" />
         <activity android:name=".ExistingForm" />
         <activity
