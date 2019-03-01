@@ -75,6 +75,7 @@
                 android:src="@drawable/ic_radio_button_24dp"
                 app:fab_colorNormal="#00C2FF"
                 android:id="@+id/float_existing_radio"
+                app:fab_title="@string/Radio_button"
                 />
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
@@ -82,6 +83,7 @@
                 android:src="@drawable/ic_check_box_black_24dp"
                 app:fab_colorNormal="#00C2FF"
                 android:id="@+id/float_existing_check"
+                app:fab_title="Check Box"
                 />
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
@@ -89,6 +91,7 @@
                 android:src="@drawable/ic_multi_24dp"
                 app:fab_colorNormal="#00C2FF"
                 android:id="@+id/float_existing_multi"
+                app:fab_title="Multi Line Text Box"
                 />
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
@@ -96,6 +99,7 @@
                 android:src="@drawable/ic_edit_text_black_24dp"
                 app:fab_colorNormal="#00C2FF"
                 android:id="@+id/float_existing_edit_text"
+                app:fab_title="Text Box"
                 />
 
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
