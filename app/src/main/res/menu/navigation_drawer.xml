@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
+    <!--<item
         android:id="@+id/feedback"
         android:orderInCategory="100"
         android:title="Send Feedback"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
     <item
         android:id="@+id/exit"
         android:orderInCategory="100"
         android:title="Exit"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_power_settings_new_black_24dp"
+        app:showAsAction="always" />
 </menu>

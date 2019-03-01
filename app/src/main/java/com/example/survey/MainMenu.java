@@ -68,33 +68,6 @@ public class MainMenu extends AppCompatActivity  {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>SURVEY APP</font>"));
 
-        /*final DrawerLayout drawerLayout = findViewById(R.id.dl);
-
-        final ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-
-        NavigationView navigationView = findViewById(R.id.nv);
-        actionBarDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainMenu.this, "Chalra hu m", Toast.LENGTH_SHORT).show();
-                if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                }else {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-
-
-        actionBarDrawerToggle.syncState();
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                return false;
-            }
-        });*/
-
 
         DIR_PATH = Environment.getExternalStorageDirectory() + "/SurveyApp"; //PATH OF Internal STORAGE FOR FORM and JSON
 
@@ -102,15 +75,6 @@ public class MainMenu extends AppCompatActivity  {
         ImageButton b1 = findViewById(R.id.b1);
         //Existing Form Button
         ImageButton b2 = findViewById(R.id.b2);
-
-        FloatingActionButton fab = findViewById(R.id.fab_recent);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         b1.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("InflateParams")
@@ -235,13 +199,30 @@ public class MainMenu extends AppCompatActivity  {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.feedback:
+            /*case R.id.feedback:
                 Intent feed=new Intent(MainMenu.this,feedback.class);
                 startActivity(feed);
-                break;
+                break;*/
             case R.id.exit:
-                finish();
-                System.exit(0);
+                AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(MainMenu.this);
+                alertDialogBuilder.setMessage("Are you sure you want to Exit");
+                alertDialogBuilder.setIcon(R.drawable.alert);
+                alertDialogBuilder.setTitle("Exit");
+                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainMenu.this,"Application Terminated",Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                //AlertDialog alertDialog=alertDialogBuilder.create();
+                alertDialogBuilder.show();
                 break;
         }
         return true;
