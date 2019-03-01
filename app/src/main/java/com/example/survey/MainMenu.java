@@ -199,10 +199,10 @@ public class MainMenu extends AppCompatActivity  {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.feedback:
+            /*case R.id.feedback:
                 Intent feed=new Intent(MainMenu.this,feedback.class);
                 startActivity(feed);
-                break;
+                break;*/
             case R.id.exit:
                 AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(MainMenu.this);
                 alertDialogBuilder.setMessage("Are you sure you want to Exit");

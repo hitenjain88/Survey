@@ -134,6 +134,7 @@ public class CreateForm extends AppCompatActivity{
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     FetchJson();
+                    //Toast.makeText(CreateForm.this,"Form saved Successfully",Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -203,8 +204,6 @@ public class CreateForm extends AppCompatActivity{
             if(resultCode == 202){
 
                 final String json = data.getStringExtra("json");
-                Toast.makeText(this, json + " WORING", Toast.LENGTH_SHORT).show();
-
 
                 try {
 
@@ -257,7 +256,6 @@ public class CreateForm extends AppCompatActivity{
             if(resultCode == 203){
 
                 String json = data.getStringExtra("json");
-                Toast.makeText(this, json + " WORING", Toast.LENGTH_SHORT).show();
                 try {
 
                     final JSONObject jsonObj = new JSONObject(json);
