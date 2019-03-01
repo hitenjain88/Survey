@@ -57,7 +57,7 @@ public class Activity_Analytics_Show extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__analytics__show);
-        DIR_PATH = Environment.getExternalStorageDirectory() + "/SurveyApp/"; //PATH OF Internal STORAGE FOR FORM and JSON
+        DIR_PATH = Environment.getExternalStorageDirectory() + "/SurveyApp"; //PATH OF Internal STORAGE FOR FORM and JSON
         parentLinearLayout = findViewById(R.id.activity_analytics_show_linear_layout);
         keys = new ArrayList<>();
         questionList = new ArrayList<>();
@@ -283,8 +283,10 @@ public class Activity_Analytics_Show extends AppCompatActivity {
        }
 
         Log.v("CSV", str.toString());
-        File file = new File(DIR_PATH+"/Excel", name + ".csv");
-        if(!file.exists()){boolean dir_created = file.mkdir(); dir_created = file.createNewFile();}
+        File file = new File(DIR_PATH,"Excel/"+name + ".csv");
+        File dir = new File(DIR_PATH,"Excel");
+        if(!dir.exists()){boolean dir_created = dir.mkdir();}
+        if(!file.exists()){boolean dir_created = file.createNewFile();}
         FileOutputStream fos = new FileOutputStream(file);
         fos.write(str.toString().getBytes());
         fos.close();
