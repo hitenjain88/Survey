@@ -20,7 +20,6 @@
         <activity android:name=".Ratings" />
         <activity android:name=".opinion" />
         <activity android:name=".feedback" />
-        <activity android:name=".PreviewForm" />
         <activity android:name=".FormFill" />
         <activity android:name=".ExistingForm" />
         <activity
