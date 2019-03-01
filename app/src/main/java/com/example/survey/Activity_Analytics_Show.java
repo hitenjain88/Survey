@@ -1,11 +1,13 @@
 package com.example.survey;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -17,6 +19,13 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +36,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Activity_Analytics_Show extends AppCompatActivity {
     String json;
@@ -103,6 +113,8 @@ public class Activity_Analytics_Show extends AppCompatActivity {
                     break;
                     case "RadioGroup" : RadioButtonAnalytics(i);
                     break;
+                    case "CheckBox" : CheckBoxAnalytics(i);
+                    break;
 
                 }
             }
@@ -120,6 +132,28 @@ public class Activity_Analytics_Show extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void CheckBoxAnalytics(int position) throws JSONException {
+        TextView tv = new TextView(this);
+        tv.setText(questionList.get(position));
+        tv.setTextSize(20);
+        tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        tv.setTextColor(Color.WHITE);
+        final ArrayList<String> items = new ArrayList<>();
+        for(int i = 0;i < answerList.size();i++){
+            String temp = answerList.get(i)[position].replace("|", ",");
+            items.add('"' + temp.substring(0,temp.length()-3)+ '"');
+        }
+        Log.v("12345678", items.toString());
+
+        JSONObject obj = list.get(position);
+        JSONArray arr = obj.getJSONArray("group");
+        final ArrayList<String> itemsQuestion = new ArrayList<>();
+        for(int i = 0;i< arr.length();i++){
+            itemsQuestion.add(arr.getJSONObject(i).getString("title"));
+        }
+        Log.v("123456", itemsQuestion.toString());
     }
 
     private void RadioButtonAnalytics(int position) throws JSONException {
@@ -140,6 +174,36 @@ public class Activity_Analytics_Show extends AppCompatActivity {
             itemsQuestion.add(arr.getJSONObject(i).getString("title"));
         }
         Log.v("123456", itemsQuestion.toString());
+
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.pie_chart_analytics, null);
+
+        PieChart pc = rowView.findViewById(R.id.pieChartAnalytics);
+        pc.setUsePercentValues(true);
+        pc.getDescription().setEnabled(true);
+        pc.setExtraOffsets(5,5,5,5);
+        pc.setDragDecelerationFrictionCoef(0.912f);
+        pc.setDrawHoleEnabled(false);
+
+        ArrayList<PieEntry> pcValue = new ArrayList<>();
+        for(int t=0; t<itemsQuestion.size();t++){
+            pcValue.add(new PieEntry(Collections.frequency(items,itemsQuestion.get(t)), itemsQuestion.get(t)));
+            Log.v("123456789", Collections.frequency(items,itemsQuestion.get(t))+"");
+        }
+        pc.animateY(5000, Easing.EaseInCubic);
+        PieDataSet dataset=new PieDataSet(pcValue, questionList.get(position));
+        dataset.setSliceSpace(3f);
+        dataset.setSelectionShift(5f);
+        dataset.setColors(ColorTemplate.JOYFUL_COLORS);
+
+
+        PieData data = new PieData(dataset);
+        data.setValueTextSize(20f);
+        dataset.setValueTextColor(Color.YELLOW);
+        pc.setData(data);
+        parentLinearLayout.addView(tv);
+        parentLinearLayout.addView(rowView);
     }
 
     private void MultiTextAnalytics(int position) {
