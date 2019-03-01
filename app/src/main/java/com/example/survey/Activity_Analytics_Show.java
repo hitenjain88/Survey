@@ -183,6 +183,8 @@ public class Activity_Analytics_Show extends AppCompatActivity {
         pc.setUsePercentValues(true);
         pc.getDescription().setEnabled(true);
         pc.setExtraOffsets(5,5,5,5);
+
+
         pc.setDragDecelerationFrictionCoef(0.912f);
         pc.setDrawHoleEnabled(false);
 
