@@ -103,6 +103,8 @@ public class Activity_Analytics_Show extends AppCompatActivity {
                     break;
                     case "RadioGroup" : RadioButtonAnalytics(i);
                     break;
+                    case "CheckBox" : CheckBoxAnalytics(i);
+                    break;
 
                 }
             }
@@ -120,6 +122,28 @@ public class Activity_Analytics_Show extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void CheckBoxAnalytics(int position) throws JSONException {
+        TextView tv = new TextView(this);
+        tv.setText(questionList.get(position));
+        tv.setTextSize(20);
+        tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        tv.setTextColor(Color.WHITE);
+        final ArrayList<String> items = new ArrayList<>();
+        for(int i = 0;i < answerList.size();i++){
+            String temp = answerList.get(i)[position].replace("|", ",");
+            items.add('"' + temp.substring(0,temp.length()-3)+ '"');
+        }
+        Log.v("12345678", items.toString());
+
+        JSONObject obj = list.get(position);
+        JSONArray arr = obj.getJSONArray("group");
+        final ArrayList<String> itemsQuestion = new ArrayList<>();
+        for(int i = 0;i< arr.length();i++){
+            itemsQuestion.add(arr.getJSONObject(i).getString("title"));
+        }
+        Log.v("123456", itemsQuestion.toString());
     }
 
     private void RadioButtonAnalytics(int position) throws JSONException {
