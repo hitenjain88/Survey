@@ -145,7 +145,7 @@ public class ActivityDropDownMenu extends AppCompatActivity {
             jsonArray.put(i, al.get(i));
         }
 
-        obj.put("type", "DropDown");
+        obj.put("type", "DropDownMenu");
         obj.put("question", value);
         obj.put("group", jsonArray);
         Log.v("ActivityDropDownMenu1", obj.toString());

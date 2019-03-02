@@ -39,7 +39,8 @@
 
             <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:theme="@style/Theme.AppCompat.DayNight"
                 android:id="@+id/spinner_dropdownmenu">
 
             </Spinner>
@@ -89,7 +90,8 @@
 
             <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 android:background="@color/colorPrimary"
                 android:id="@+id/spinner_dropdownmenu_preview">
 

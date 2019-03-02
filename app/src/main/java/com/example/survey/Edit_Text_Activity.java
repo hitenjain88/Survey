@@ -6,8 +6,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,15 +17,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rengwuxian.materialedittext.MaterialEditText;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Edit_Text_Activity extends AppCompatActivity {
 
     TextView questionText;
-    Switch image_switch;
+    Switch integer_switch;
     String value,s1;
     Button btn_image;
     boolean imag;
@@ -34,10 +32,10 @@ public class Edit_Text_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit__text_);
-        image_switch = findViewById(R.id.switch1);
-        btn_image = findViewById(R.id.btn_add_image_edit_text);
+        integer_switch = findViewById(R.id.switch1);
+        //btn_image = findViewById(R.id.btn_add_image_edit_text);
         imag = false;
-        image_switch.setChecked(false);
+        integer_switch.setChecked(false);
         final EditText question = findViewById(R.id.question_edit_text);
         questionText = findViewById(R.id.question);
 
@@ -65,19 +63,22 @@ public class Edit_Text_Activity extends AppCompatActivity {
             }
         });
 
-        image_switch.setOnClickListener(new View.OnClickListener() {
+        integer_switch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(imag){
-                imag = false;
-                    btn_image.setVisibility(View.GONE);
-                }else{
-                    btn_image.setVisibility(View.VISIBLE);
+                if(!imag){
                     imag = true;
-                }
+                    //question.setText("");
+                    //question.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
+                }else{
+                    //question.setText("");
+                    //question.setInputType(InputType.TYPE_CLASS_TEXT);
+                    imag = false;
+                }
             }
         });
+
     }
 
     @Override
@@ -118,7 +119,7 @@ public class Edit_Text_Activity extends AppCompatActivity {
         JSONObject obj = new JSONObject();
 
         obj.put("type", "EditText");
-        obj.put("image", imag);
+        obj.put("value", imag);
         obj.put("question", value);
 
         intent.putExtra("image", imag);

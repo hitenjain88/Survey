@@ -9,15 +9,18 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +44,7 @@ import java.util.Locale;
 public class ExistingForm extends AppCompatActivity {
 
     private LinearLayout parentLinearLayout;
-    private FloatingActionButton float_radio, float_check, float_multi, float_edit_text;
+    private FloatingActionButton float_radio, float_check, float_multi, float_edit_text, float_document, float_dropdown;
 
     private String DIR_PATH;
     private String name, desc, js, author;
@@ -58,6 +61,9 @@ public class ExistingForm extends AppCompatActivity {
         float_radio = findViewById(R.id.float_existing_radio);
         float_multi = findViewById(R.id.float_existing_multi);
         float_edit_text = findViewById(R.id.float_existing_edit_text);
+        float_document = findViewById(R.id.float_existing_document);
+        float_dropdown = findViewById(R.id.float_existing_drop_down);
+
         Log.v("testing1", "akjflf");
 
         Intent intent = getIntent();
@@ -72,7 +78,8 @@ public class ExistingForm extends AppCompatActivity {
             Log.v("testing1", type.toString()+"akjflf");
             name = jsonObject.getString("title");
             desc = jsonObject.getString("description");
-            //author = jsonObject.getString("author");
+            author = jsonObject.getString("author");
+
             Log.v("testing1",  type.length()+" Length");
 
             for(int i = 0; i < type.length(); i++){
@@ -90,6 +97,11 @@ public class ExistingForm extends AppCompatActivity {
                     break;
                     case "MultiEditText" : SetMultiEditText(j);
                     break;
+                    case "document" : SetDocument(j);
+                    break;
+                    case "DropDownMenu" : SetDropDownMenu(j);
+                    break;
+
                 }
 
             }
@@ -126,6 +138,20 @@ public class ExistingForm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ExistingForm.this, Multi_Text_Activity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+        float_document.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ExistingForm.this, ActivityDocument.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+        float_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ExistingForm.this, ActivityDropDownMenu.class);
                 startActivityForResult(intent, 1);
             }
         });
@@ -342,6 +368,78 @@ public class ExistingForm extends AppCompatActivity {
             }
 
         }
+
+        if(resultCode == 205){
+            String edittext=data.getStringExtra("question");
+            String json=data.getStringExtra("json");
+
+            try {
+                final JSONObject obj = new JSONObject(json);
+                list.add(obj);
+
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View rowView = inflater.inflate(R.layout.field_document, null);
+
+                Button remove = rowView.findViewById(R.id.btn_remove);
+                final TextView textView = rowView.findViewById(R.id.text_view);
+
+                textView.setText(edittext);
+
+                // Add the new row before the add field button.
+                parentLinearLayout.addView(rowView);
+                remove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        parentLinearLayout.removeView(rowView);
+                        list.remove(obj);
+
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(resultCode == 206){
+            String edittext=data.getStringExtra("question");
+            String json=data.getStringExtra("json");
+
+            try {
+                final JSONObject obj = new JSONObject(json);
+                list.add(obj);
+
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View rowView = inflater.inflate(R.layout.field_dropdownmenu, null);
+
+                Button remove = rowView.findViewById(R.id.btn_remove);
+                final TextView textView = rowView.findViewById(R.id.text_view);
+                Spinner sp =rowView.findViewById(R.id.field_dropdown);
+                JSONArray jsonArray = obj.getJSONArray("group");
+                ArrayList<String> al = new ArrayList<>();
+                for(int i = 0;i < jsonArray.length(); i++){
+                    al.add(jsonArray.getString(i));
+                }
+
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, al);
+                sp.setAdapter(arrayAdapter);
+                textView.setText(edittext);
+
+                // Add the new row before the add field button.
+                parentLinearLayout.addView(rowView);
+                remove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        parentLinearLayout.removeView(rowView);
+                        list.remove(obj);
+
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void SetMultiEditText(JSONObject j) throws JSONException {
@@ -460,7 +558,7 @@ public class ExistingForm extends AppCompatActivity {
 
     private void SetEditText(JSONObject j) throws JSONException {
         String edittext=j.getString("question");
-        boolean imag = j.getBoolean("image");
+        boolean imag = j.getBoolean("value");
         final JSONObject object = j;
         list.add(object);
         Log.v("testing1", j.toString());
@@ -468,11 +566,7 @@ public class ExistingForm extends AppCompatActivity {
         final View rowView = inflater.inflate(R.layout.field_edittext, null);
 
         Button remove = rowView.findViewById(R.id.btn_remove);
-        Button image_answer = rowView.findViewById(R.id.btn_add_image_field_edit_text);
         final TextView textView = rowView.findViewById(R.id.text_view);
-        if(imag){
-            image_answer.setVisibility(View.VISIBLE);
-        }
 
         textView.setText(edittext);
 
@@ -488,6 +582,69 @@ public class ExistingForm extends AppCompatActivity {
 
     }
 
+    private void SetDocument(JSONObject j) throws JSONException {
+        String edittext = j.getString("question");
+        final JSONObject object = j;
+        list.add(object);
+        Log.v("testing123", j.toString());
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.field_document, null);
+
+        Button remove = rowView.findViewById(R.id.btn_remove);
+        final TextView textView = rowView.findViewById(R.id.text_view);
+
+
+        textView.setText(edittext);
+
+        // Add the new row before the add field button.
+        parentLinearLayout.addView(rowView);
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentLinearLayout.removeView(rowView);
+                list.remove(object);
+            }
+        });
+
+    }
+
+    private void SetDropDownMenu(JSONObject j) throws JSONException {
+        String edittext = j.getString("question");
+        JSONArray jsonArray = j.getJSONArray("group");
+        final JSONObject object = j;
+        list.add(object);
+        Log.v("testing1", j.toString());
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.field_dropdownmenu, null);
+
+        Button remove = rowView.findViewById(R.id.btn_remove);
+        final TextView textView = rowView.findViewById(R.id.text_view);
+        final Spinner spinner = rowView.findViewById(R.id.field_dropdown);
+
+
+        ArrayList<String> al = new ArrayList<>();
+        for(int i = 0 ; i < jsonArray.length() ; i++){
+            al.add(i, jsonArray.getString(i));
+        }
+        ArrayAdapter<String> aa = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, al);
+        textView.setText(edittext);
+
+        spinner.setAdapter(aa);
+
+        // Add the new row before the add field button.
+        parentLinearLayout.addView(rowView);
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentLinearLayout.removeView(rowView);
+                list.remove(object);
+            }
+        });
+
+
+    }
+
+
     public void FetchJson() throws JSONException, IOException {
         //JSONObject json = new JSONObject(js);
 
@@ -498,6 +655,7 @@ public class ExistingForm extends AppCompatActivity {
         String formattedDate = df.format(c);
         jsonObj.put("title", name);
         jsonObj.put("description", desc);
+        jsonObj.put("author" ,author);
         jsonObj.put("date", formattedDate);
 
         JSONArray type = new JSONArray();

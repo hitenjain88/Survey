@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -76,6 +78,10 @@ public class PreviewForm extends AppCompatActivity {
                     case "CheckBox" : SetCheckBox(j);
                         break;
                     case "MultiEditText" : SetMultiEditText(j);
+                        break;
+                    case "document" : SetDocument(j);
+                        break;
+                    case "DropDownMenu" : SetDropDownMenu(j);
                         break;
                 }
 
@@ -183,20 +189,16 @@ public class PreviewForm extends AppCompatActivity {
 
     private void SetEditText(JSONObject j) throws JSONException {
         String edittext=j.getString("question");
-        boolean imag = j.getBoolean("image");
+        boolean imag = j.getBoolean("value");
         final JSONObject object = j;
-        list.add(object);
+
         Log.v("testing1", j.toString());
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.field_edittext, null);
 
         Button remove = rowView.findViewById(R.id.btn_remove);
-        Button image_answer = rowView.findViewById(R.id.btn_add_image_field_edit_text);
-        final TextView textView = rowView.findViewById(R.id.text_view);
-        if(imag){
-            image_answer.setVisibility(View.VISIBLE);
-        }
 
+        final TextView textView = rowView.findViewById(R.id.text_view);
         textView.setText(edittext);
 
         // Add the new row before the add field button.
@@ -204,4 +206,65 @@ public class PreviewForm extends AppCompatActivity {
         remove.setVisibility(View.GONE);
 
     }
+
+    private void SetDocument(JSONObject j) throws JSONException {
+        String edittext = j.getString("question");
+        final JSONObject object = j;
+        Log.v("testing123", j.toString());
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.field_document, null);
+
+        final Button remove = rowView.findViewById(R.id.btn_remove);
+        final TextView textView = rowView.findViewById(R.id.text_view);
+
+        textView.setText(edittext);
+
+        // Add the new row before the add field button.
+        parentLinearLayout.addView(rowView);
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentLinearLayout.removeView(rowView);
+                remove.setVisibility(View.GONE);
+            }
+        });
+
+    }
+
+    private void SetDropDownMenu(JSONObject j) throws JSONException {
+        String edittext = j.getString("question");
+        JSONArray jsonArray = j.getJSONArray("group");
+        final JSONObject object = j;
+        list.add(object);
+        Log.v("testing1", j.toString());
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.field_dropdownmenu, null);
+
+        final Button remove = rowView.findViewById(R.id.btn_remove);
+        final TextView textView = rowView.findViewById(R.id.text_view);
+        final Spinner spinner = rowView.findViewById(R.id.field_dropdown);
+
+
+        ArrayList<String> al = new ArrayList<>();
+        for(int i = 0 ; i < jsonArray.length() ; i++){
+            al.add(i, jsonArray.getString(i));
+        }
+        ArrayAdapter<String> aa = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, al);
+        textView.setText(edittext);
+
+        spinner.setAdapter(aa);
+
+        // Add the new row before the add field button.
+        parentLinearLayout.addView(rowView);
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentLinearLayout.removeView(rowView);
+                remove.setVisibility(View.GONE);
+            }
+        });
+
+
+    }
+
 }

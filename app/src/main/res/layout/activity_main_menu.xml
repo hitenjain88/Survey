@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainMenu">
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,89 +22,97 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <com.github.florent37.shapeofview.shapes.ArcView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:elevation="0dp"
-        app:shape_arc_height="20dp"
-        app:shape_arc_position="bottom"
-        android:background="@color/colorPrimary"
-        >
+        android:layout_height="wrap_content">
 
 
-    <ImageButton
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"/>
-
-    </com.github.florent37.shapeofview.shapes.ArcView>
-
-    <com.github.florent37.shapeofview.shapes.RoundRectView
-        android:layout_margin="25dp"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:elevation="4dp"
-        app:shape_roundRect_bottomLeftRadius="10dp"
-        app:shape_roundRect_bottomRightRadius="10dp"
-        app:shape_roundRect_topLeftRadius="10dp"
-        app:shape_roundRect_topRightRadius="10dp"
-        app:shape_roundRect_borderColor="@android:color/black"
-        app:shape_roundRect_borderWidth="2dp"
-        >
-
-        <ImageButton
+        <com.github.florent37.shapeofview.shapes.ArcView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="center"
-            android:src="@drawable/create_form"
-            android:id="@+id/b1"
-            />
+            android:layout_height="150dp"
+            android:elevation="0dp"
+            app:shape_arc_height="20dp"
+            app:shape_arc_position="bottom"
+            android:background="@color/colorPrimary"
+            >
 
-        <TextView
+            <com.flaviofaria.kenburnsview.KenBurnsView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/back2"/>
+
+        </com.github.florent37.shapeofview.shapes.ArcView>
+
+    </RelativeLayout>
+
+        <com.github.florent37.shapeofview.shapes.RoundRectView
+            android:layout_margin="25dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Create Form"
-            android:textSize="30dp"
-            android:layout_gravity="bottom"
-            android:background="#7A000000"
-            android:shadowColor="@color/colorPrimary"
-            android:textColor="#fff"/>
+            android:layout_height="100dp"
+            android:elevation="4dp"
+            app:shape_roundRect_bottomLeftRadius="10dp"
+            app:shape_roundRect_bottomRightRadius="10dp"
+            app:shape_roundRect_topLeftRadius="10dp"
+            app:shape_roundRect_topRightRadius="10dp"
+            app:shape_roundRect_borderColor="@android:color/black"
+            app:shape_roundRect_borderWidth="2dp"
+            >
 
-    </com.github.florent37.shapeofview.shapes.RoundRectView>
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@drawable/back3"
+                android:id="@+id/b1"
+                />
 
-    <com.github.florent37.shapeofview.shapes.RoundRectView
-        android:layout_margin="25dp"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:elevation="4dp"
-        app:shape_roundRect_bottomLeftRadius="10dp"
-        app:shape_roundRect_bottomRightRadius="10dp"
-        app:shape_roundRect_topLeftRadius="10dp"
-        app:shape_roundRect_topRightRadius="10dp"
-        app:shape_roundRect_borderColor="@android:color/black"
-        app:shape_roundRect_borderWidth="2dp"
-        >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create Form"
+                android:textSize="30dp"
+                android:layout_gravity="bottom"
+                android:background="#7A000000"
+                android:shadowColor="@color/colorPrimary"
+                android:textColor="#fff"/>
 
-        <ImageButton
+        </com.github.florent37.shapeofview.shapes.RoundRectView>
+
+        <com.github.florent37.shapeofview.shapes.RoundRectView
+            android:layout_margin="25dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="center"
-            android:src="@drawable/create_form"
-            android:id="@+id/b2"
-            />
+            android:layout_height="100dp"
+            android:elevation="4dp"
+            app:shape_roundRect_bottomLeftRadius="10dp"
+            app:shape_roundRect_bottomRightRadius="10dp"
+            app:shape_roundRect_topLeftRadius="10dp"
+            app:shape_roundRect_topRightRadius="10dp"
+            app:shape_roundRect_borderColor="@android:color/black"
+            app:shape_roundRect_borderWidth="2dp"
+            >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Existing Form"
-            android:textSize="30dp"
-            android:layout_gravity="bottom"
-            android:background="#7A000000"
-            android:shadowColor="@color/colorPrimary"
-            android:textColor="#fff"/>
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@drawable/back3"
+                android:id="@+id/b2"
+                />
 
-    </com.github.florent37.shapeofview.shapes.RoundRectView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Existing Form"
+                android:textSize="30dp"
+                android:layout_gravity="bottom"
+                android:background="#7A000000"
+                android:shadowColor="@color/colorPrimary"
+                android:textColor="#fff"/>
+
+        </com.github.florent37.shapeofview.shapes.RoundRectView>
+
 
 
 </LinearLayout>

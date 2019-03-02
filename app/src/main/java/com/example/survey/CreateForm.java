@@ -216,9 +216,7 @@ public class CreateForm extends AppCompatActivity{
 
                     // Add the new row before the add field button.
                     parentLinearLayout.addView(rowView);
-                    if(imag){
-                        image_answer.setVisibility(View.VISIBLE);
-                    }
+
                     remove.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -450,6 +448,7 @@ public class CreateForm extends AppCompatActivity{
         String formattedDate = df.format(c);
         jsonObj.put("title", name);
         jsonObj.put("description", desc);
+        jsonObj.put("author", author);
         jsonObj.put("date", formattedDate);
 
         JSONArray type = new JSONArray();
