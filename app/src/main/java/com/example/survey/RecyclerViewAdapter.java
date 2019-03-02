@@ -246,8 +246,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 btn_fill = itemView.findViewById(R.id.existing_fill);
                 btn_share = itemView.findViewById(R.id.existing_share);
                 btn_analytics = itemView.findViewById(R.id.btn_Analytics);
-
-
             }
         }
 }

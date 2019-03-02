@@ -56,7 +56,6 @@ public class MainMenu extends AppCompatActivity  {
     private String DIR_PATH;
     private final int STORAGE_PERMISSION_CODE = 100;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);

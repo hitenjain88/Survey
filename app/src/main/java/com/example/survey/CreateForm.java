@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Animatable;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -18,12 +19,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,13 +46,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.annotation.RequiresApi;
+
 public class CreateForm extends AppCompatActivity{
 
     private LinearLayout parentLinearLayout;
-    private FloatingActionButton float_radio, float_check, float_multi, float_edit_text;
+    private FloatingActionButton float_radio, float_check, float_multi, float_edit_text, float_dropdown, float_document;
     private boolean isOpen = false;
     private String DIR_PATH;
-    private String name, desc, js;
+    private String name, desc, js, author;
     private ArrayList<JSONObject> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,8 @@ public class CreateForm extends AppCompatActivity{
         float_radio = findViewById(R.id.float_radio);
         float_multi = findViewById(R.id.float_multi);
         float_edit_text = findViewById(R.id.float_edit_text);
+        float_dropdown = findViewById(R.id.float_drop_down);
+        float_document = findViewById(R.id.float_document);
 
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
@@ -81,6 +88,7 @@ public class CreateForm extends AppCompatActivity{
         String description = intent.getStringExtra("description");
         desc = description;
         String json = intent.getStringExtra("json");
+        author  = intent.getStringExtra("author");
         js = json;
 
         //TextView t1 = findViewById(R.id.title);
@@ -122,6 +130,29 @@ public class CreateForm extends AppCompatActivity{
                 startActivityForResult(intent, 1);
             }
         });
+
+        float_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        float_document.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateForm.this, ActivityDocument.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+        float_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateForm.this, ActivityDropDownMenu.class);
+                startActivityForResult(intent, 1);
+            }
+        });
     }
 
     @Override
@@ -155,6 +186,7 @@ public class CreateForm extends AppCompatActivity{
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -334,10 +366,81 @@ public class CreateForm extends AppCompatActivity{
                 e.printStackTrace();
             }
 
+        }
 
+        if(resultCode == 205){
+            String edittext=data.getStringExtra("question");
+            String json=data.getStringExtra("json");
 
+            try {
+                final JSONObject obj = new JSONObject(json);
+                list.add(obj);
+
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View rowView = inflater.inflate(R.layout.field_document, null);
+
+                Button remove = rowView.findViewById(R.id.btn_remove);
+                final TextView textView = rowView.findViewById(R.id.text_view);
+
+                textView.setText(edittext);
+
+                // Add the new row before the add field button.
+                parentLinearLayout.addView(rowView);
+                remove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        parentLinearLayout.removeView(rowView);
+                        list.remove(obj);
+
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(resultCode == 206){
+            String edittext=data.getStringExtra("question");
+            String json=data.getStringExtra("json");
+
+            try {
+                final JSONObject obj = new JSONObject(json);
+                list.add(obj);
+
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View rowView = inflater.inflate(R.layout.field_dropdownmenu, null);
+
+                Button remove = rowView.findViewById(R.id.btn_remove);
+                final TextView textView = rowView.findViewById(R.id.text_view);
+                Spinner sp =rowView.findViewById(R.id.field_dropdown);
+                JSONArray jsonArray = obj.getJSONArray("group");
+                ArrayList<String> al = new ArrayList<>();
+                for(int i = 0;i < jsonArray.length(); i++){
+                    al.add(jsonArray.getString(i));
+                }
+
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, al);
+                sp.setAdapter(arrayAdapter);
+                textView.setText(edittext);
+
+                // Add the new row before the add field button.
+                parentLinearLayout.addView(rowView);
+                remove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        parentLinearLayout.removeView(rowView);
+                        list.remove(obj);
+
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
+
 
     public void FetchJson() throws JSONException, IOException {
         //JSONObject json = new JSONObject(js);

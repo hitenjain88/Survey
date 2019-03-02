@@ -88,6 +88,20 @@
             app:fab_colorNormal="#00C2FF"
             android:id="@+id/float_edit_text"
             />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_drop_down_black_24dp"
+            app:fab_colorNormal="#00C2FF"
+            android:id="@+id/float_drop_down"
+            />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_attach_file_black_24dp"
+            app:fab_colorNormal="#00C2FF"
+            android:id="@+id/float_document"
+            />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
