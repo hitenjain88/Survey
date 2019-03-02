@@ -3,23 +3,30 @@ package com.example.survey;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -63,9 +70,8 @@ public class Analytics_Filled extends AppCompatActivity {
                 JSONObject obj  = arr.getJSONObject(i);
                 Iterator<String> itr = obj.keys();
                 keys.add(itr.next());
-
             }
-
+            Log.v("test_12", keys.toString());
             JSONObject jsonObject = new JSONObject(json);
             Log.v("test_1", jsonObject.toString());
             String name2 = jsonObject.getString("title");
@@ -89,16 +95,33 @@ public class Analytics_Filled extends AppCompatActivity {
                 JSONObject x = arr.getJSONObject(i);
                 String ans = x.getString(keys.get(i));
 
-                Log.v("testing1", j.toString()+"10011");
+                Log.v("testing1", j.getString("type")+"10011");
+
                 switch (j.getString("type")){
                     case "EditText" : SetEditText(j, ans);
+                        Log.v("testing1234", "EditText" + " " + i);
                         break;
                     case "RadioGroup" : SetRadioGroup(j,ans);
+                        Log.v("testing1234", "EditText" + " " + i);
+
                         break;
                     case "CheckBox" : SetCheckBox(j,ans);
+                        Log.v("testing1234", "EditText" + " " + i);
+
                         break;
                     case "MultiEditText" : SetMultiEditText(j,ans);
+                        Log.v("testing1234", "EditText" + " " + i);
+
                         break;
+                    case "document" : SetDocument(j, ans);
+                        Log.v("testing1234", "EditText" + " " + i);
+
+                        break;
+                    case "DropDownMenu" : SetDropDownMenu(j, ans);
+                        Log.v("testing1234", "EditText" + " " + i);
+
+                        break;
+
                 }
 
             }
@@ -106,6 +129,68 @@ public class Analytics_Filled extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void SetDocument(JSONObject j, String ans) throws JSONException {
+        String edittext = j.getString("question");
+        final JSONObject object = j;
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.field_document, null);
+        final Button ImageButton = rowView.findViewById(R.id.btn_add_image_field_edit_text);
+        final Button remove = rowView.findViewById(R.id.btn_remove);
+        final TextView textView = rowView.findViewById(R.id.text_view);
+        final ImageView iv = rowView.findViewById(R.id.image_field_edit);
+        textView.setText(edittext);
+        ImageButton.setVisibility(View.GONE);
+        File file = new File(ans);
+        Uri imageUri = Uri.fromFile(file);
+        Glide.with(this)
+                .load(imageUri)
+                .into(iv);
+        // Add the new row before the add field button.
+        parentLinearLayout.addView(rowView);
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentLinearLayout.removeView(rowView);
+                remove.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void SetDropDownMenu(JSONObject j, String ans) throws JSONException {
+        String edittext = j.getString("question");
+        JSONArray jsonArray = j.getJSONArray("group");
+        final JSONObject object = j;
+        list.add(object);
+        Log.v("testing1", j.toString());
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.field_dropdownmenu, null);
+
+        final Button remove = rowView.findViewById(R.id.btn_remove);
+        final TextView textView = rowView.findViewById(R.id.text_view);
+        final Spinner spinner = rowView.findViewById(R.id.field_dropdown);
+
+        ArrayList<String> al = new ArrayList<>();
+        for(int i = 0 ; i < jsonArray.length() ; i++){
+            al.add(i, jsonArray.getString(i));
+        }
+        ArrayAdapter<String> aa = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, al);
+        textView.setText(edittext);
+
+        spinner.setAdapter(aa);
+        spinner.setSelection(al.indexOf(ans));
+
+        // Add the new row before the add field button.
+        parentLinearLayout.addView(rowView);
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentLinearLayout.removeView(rowView);
+                remove.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void SetMultiEditText(JSONObject j, String Answer) throws JSONException {
@@ -211,7 +296,7 @@ public class Analytics_Filled extends AppCompatActivity {
 
     private void SetEditText(JSONObject j, String Answer) throws JSONException {
         String edittext=j.getString("question");
-        boolean imag = j.getBoolean("image");
+        boolean imag = j.getBoolean("value");
         final JSONObject object = j;
         list.add(object);
         Log.v("testing1", j.toString());
@@ -219,14 +304,10 @@ public class Analytics_Filled extends AppCompatActivity {
         final View rowView = inflater.inflate(R.layout.field_edittext, null);
 
         Button remove = rowView.findViewById(R.id.btn_remove);
-        Button image_answer = rowView.findViewById(R.id.btn_add_image_field_edit_text);
+
         final TextView textView = rowView.findViewById(R.id.text_view);
         final TextView answer = rowView.findViewById(R.id.field_edit_text_fill);
 
-        if(imag){
-            image_answer.setVisibility(View.VISIBLE);
-            answer.setVisibility(View.INVISIBLE);
-        }
         textView.setText(edittext);
         answer.setText(Answer);
         // Add the new row before the add field button.

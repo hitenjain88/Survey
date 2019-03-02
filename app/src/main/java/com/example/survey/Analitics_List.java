@@ -48,8 +48,6 @@ public class Analitics_List extends AppCompatActivity {
         DIR_PATH = Environment.getExternalStorageDirectory() + "/SurveyApp"; //PATH OF Internal STORAGE FOR FORM and JSON
         btn_analytics = findViewById(R.id.btn_analytics_list);
 
-
-
         try {
             jsonArray = new JSONArray(json);
             temp = jsonArray;

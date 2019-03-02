@@ -66,6 +66,8 @@ public class Activity_Analytics_Show extends AppCompatActivity {
         list = new ArrayList<>();
         btn_save_excel = findViewById(R.id.btn_save_excel);
 
+        Log.v("TEST123", JsonAnswer+"\n"+JsonForm);
+
 
         Intent intent = getIntent();
         JsonForm = intent.getStringExtra("json");
