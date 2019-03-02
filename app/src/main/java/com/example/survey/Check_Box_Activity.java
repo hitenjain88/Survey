@@ -32,7 +32,7 @@ public class Check_Box_Activity extends AppCompatActivity {
     Button btn_add;
     TextView tv;
     String title,s1;
-    int flag;
+    int flag,flag2=0;
     LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class Check_Box_Activity extends AppCompatActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                flag2=flag2+1;
                 View mView = findViewById(R.id.check_linearlayout);
                 //LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final LinearLayout ll = findViewById(R.id.check_linearlayout);
@@ -151,7 +152,7 @@ public class Check_Box_Activity extends AppCompatActivity {
         al.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(flag==1){
+                if(flag==1&&flag2>=2){
                     try {
                         returnResult();
                     } catch (JSONException e) {
@@ -215,14 +216,14 @@ public class Check_Box_Activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.save_option:
-                if(flag==1){
+                if(flag==1&&flag2>=2){
                     try {
                         returnResult();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }}
                 else{
-                    Toast.makeText(this, "Enter your Question", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Enter your Question or Add Check Box", Toast.LENGTH_SHORT).show();
                 }
                 break;
 

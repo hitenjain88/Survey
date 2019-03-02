@@ -32,7 +32,7 @@ public class Radio_Button_Activity extends AppCompatActivity {
     RadioGroup rg, rg_preview;
     Button btn_add;
     TextView tv;
-    int flag;
+    int flag,flag2=0;
     String s1;
 
     @Override
@@ -53,6 +53,7 @@ public class Radio_Button_Activity extends AppCompatActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                flag2=flag2+1;
                 AlertDialog.Builder builder = new AlertDialog.Builder(Radio_Button_Activity.this);
                 builder.setTitle("Enter the Radio Name");
 
@@ -157,7 +158,7 @@ public class Radio_Button_Activity extends AppCompatActivity {
         al.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(flag==1){
+                if(flag==1&&flag2>=2){
                     try {
                         returnResult();
                     } catch (JSONException e) {
@@ -226,14 +227,14 @@ public class Radio_Button_Activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.save_option:
-                if(flag==1){
+                if(flag==1&&flag2>=2){
                     try {
                         returnResult();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }}
                 else{
-                    Toast.makeText(this, "Enter your Question", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Enter your Question or Add Radio Button", Toast.LENGTH_SHORT).show();
                 }
 
                 break;

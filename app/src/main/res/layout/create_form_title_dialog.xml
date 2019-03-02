@@ -2,8 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#223B49"
-    android:orientation="vertical" >
+    android:animationCache="false"
+    android:background="@drawable/shape_dialogbox"
+    android:layoutMode="clipBounds"
+    android:orientation="vertical">
+
 
     <TextView
         android:id="@+id/txt_dia"
@@ -12,14 +15,14 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:text="@string/enter_details_for_your_form"
-        android:textColor="@android:color/white"
+        android:textColor="@color/white"
         android:textSize="25sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
 
         >
 
@@ -27,30 +30,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Title"
+            android:textColor="@color/white"
+            android:textColorHint="@color/black"
             tools:ignore="HardcodedText" />
 
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/description"
 
         >
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="brief description"
-
+            android:hint="Brief Description"
+            android:textColor="@color/white"
             tools:ignore="HardcodedText" />
 
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/author"
 
         >
 
@@ -58,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Author Name"
-
+            android:textColor="@color/white"
             tools:ignore="HardcodedText" />
 
     </android.support.design.widget.TextInputLayout>
@@ -68,14 +73,17 @@
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:layout_gravity="center"
-        android:background="@android:color/white"
+        android:background="@drawable/button_radius"
         android:clickable="true"
-        android:text="Save"
-        android:textColor="#5DBCD2"
-        android:textStyle="bold"
+        android:textSize="20dp"
         android:focusable="true"
+        android:padding="10dp"
+        android:layout_margin="6dp"
+        android:text="Save"
+
+        android:textColor="@color/peach_puff"
+        android:textStyle="bold"
         tools:ignore="HardcodedText" />
 
 

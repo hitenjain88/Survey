@@ -12,7 +12,9 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="Radio_button">Radio Button</string>
-
+    <string name="Text_box">Text Box</string>
+    <string name="Multi_line">Multi Line Text Box</string>
+    <string name="Check_box">Check Box</string>
 
     <string name="report">SurveyReport</string>
     <string name="download">Download</string>

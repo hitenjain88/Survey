@@ -9,6 +9,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:textColorHint">@color/white</item>
         <item name="android:textColorSecondary">@color/color_icon</item>
     </style>
 
@@ -18,6 +19,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+
 
     </style>
 

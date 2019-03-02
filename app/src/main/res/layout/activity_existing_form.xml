@@ -67,6 +67,9 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:id="@+id/float_existing_add_layout"
+            app:fab_addButtonPlusIconColor="@color/black"
+            app:fab_labelStyle="@string/app_name"
+
             >
 
             <com.getbase.floatingactionbutton.FloatingActionButton
@@ -74,8 +77,10 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_radio_button_24dp"
                 app:fab_colorNormal="#00C2FF"
+                app:fab_colorPressed="@color/royal_blue"
                 android:id="@+id/float_existing_radio"
                 app:fab_title="@string/Radio_button"
+
                 />
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
@@ -83,7 +88,7 @@
                 android:src="@drawable/ic_check_box_black_24dp"
                 app:fab_colorNormal="#00C2FF"
                 android:id="@+id/float_existing_check"
-                app:fab_title="Check Box"
+                app:fab_title="@string/Check_box"
                 />
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
@@ -91,7 +96,7 @@
                 android:src="@drawable/ic_multi_24dp"
                 app:fab_colorNormal="#00C2FF"
                 android:id="@+id/float_existing_multi"
-                app:fab_title="Multi Line Text Box"
+                app:fab_title="@string/Multi_line"
                 />
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
@@ -99,8 +104,9 @@
                 android:src="@drawable/ic_edit_text_black_24dp"
                 app:fab_colorNormal="#00C2FF"
                 android:id="@+id/float_existing_edit_text"
-                app:fab_title="Text Box"
+                app:fab_title="@string/Text_box"
                 />
+
 
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
