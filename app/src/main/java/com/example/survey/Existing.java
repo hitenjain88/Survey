@@ -58,7 +58,7 @@ public class Existing extends AppCompatActivity {
     private ArrayList<String> actualdir=new ArrayList<>();
     private ArrayList<String> filteredtitle=new ArrayList<>();
     private ArrayList<String> filtereddir=new ArrayList<>();
-    private int index;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme2);
@@ -204,12 +204,12 @@ public class Existing extends AppCompatActivity {
                 else{
                     for(int i=0;i<actualtitle.size();i++){
                         if(((actualtitle.get(i)).toLowerCase()).contains(constraint)){
-                            //index=actualtitle.indexOf(item);
                             filteredtitle.add(actualtitle.get(i));
                             filtereddir.add(actualdir.get(i));
                         }
                     }
                 }
+
 
                 mTitle.clear();
                 mTitle.addAll(filteredtitle);

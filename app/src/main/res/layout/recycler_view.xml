@@ -30,13 +30,18 @@
             android:layout_height="match_parent"
             android:layout_weight="0.1"
             android:id="@+id/btn_Analytics"
+            android:layout_marginRight="10dp"
+            android:textColor="#fff"
             android:visibility="invisible"
+            android:background="@drawable/button1"
             android:text="Analytics"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:id="@+id/open"
+            android:textColor="#fff"
+            android:background="@drawable/button1"
             android:text="Preview"/>
 
     </LinearLayout>
@@ -56,35 +61,48 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit"
-            android:id="@+id/existing_edit"
-            android:layout_weight="2"
-            />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="Delete"
+            android:textColor="#fff"
             android:id="@+id/existing_delete"
             android:layout_weight="2"
+            android:background="@drawable/button"
+            android:layout_margin="10dp"
             />
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:id="@+id/existing_share"
             android:text="Share"
             android:layout_weight="2"
+            android:background="@drawable/button"
+            android:textColor="#fff"
+            android:layout_margin="10dp"
             />
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="Fill"
             android:id="@+id/existing_fill"
             android:layout_weight="2"
+            android:background="@drawable/button"
+            android:textColor="#fff"
+            android:layout_margin="10dp"
             />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Edit"
+            android:id="@+id/existing_edit"
+            android:layout_weight="2"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:textColor="#fff"
+            />
+
     </LinearLayout>
 
 
