@@ -19,18 +19,17 @@
         android:textSize="25sp"/>
 
 </LinearLayout>
-    <EditText
-        android:padding="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+    <Button
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:maxLines="1"
-        android:maxLength="40"
-        android:id="@+id/field_fill_edit_text_value"
-        android:hint="Enter your Answer Here"
-        android:background="@drawable/box"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_add_image_field_edit_text_fill"
+        android:visibility="visible"
+        android:text="Input Image"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/image_field_edit"/>
 
 </LinearLayout>

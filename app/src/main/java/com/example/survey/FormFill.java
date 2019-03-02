@@ -3,26 +3,38 @@ package com.example.survey;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +59,8 @@ public class FormFill extends AppCompatActivity {
     private ArrayList<View> listView;
     private ArrayList<JSONObject> listJson;
     private ArrayList<JSONObject> listFillJson;
+
+    private ImageView imageView;
 
 
 
@@ -99,6 +113,10 @@ public class FormFill extends AppCompatActivity {
                         break;
                     case "MultiEditText" : SetMultiEditText(j);
                         break;
+                    case "document" : SetDocument(j);
+                        break;
+                    case "DropDownMenu" : SetDropDownMenu(j);
+                        break;
                 }
 
             }
@@ -108,6 +126,7 @@ public class FormFill extends AppCompatActivity {
         }
 
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -145,6 +164,7 @@ public class FormFill extends AppCompatActivity {
         return true;
     }
 
+    @androidx.annotation.RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -210,7 +230,6 @@ public class FormFill extends AppCompatActivity {
 
     }
 
-
     private void SetRadioGroup(JSONObject j) {
 
         try {
@@ -251,20 +270,76 @@ public class FormFill extends AppCompatActivity {
 
     private void SetEditText(JSONObject j) throws JSONException {
         String question=j.getString("question");
-        boolean imag = j.getBoolean("image");
+        boolean imag = j.getBoolean("value");
         final JSONObject object = j;
         Log.v("testing1", j.toString());
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.field_fill_edittext, null);
-        Button image_answer = rowView.findViewById(R.id.btn_add_image_field_edit_text_fill);
-        final TextView textView = rowView.findViewById(R.id.field_fill_edit_text);
-        if(imag){
-            image_answer.setVisibility(View.VISIBLE);
 
+        final TextView textView = rowView.findViewById(R.id.field_fill_edit_text);
+        final EditText et = rowView.findViewById(R.id.field_fill_edit_text_value);
+        if(imag){
+            et.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         }
         textView.setText(question);
 
+        // Add the new row before the add field button.
+        parentLinearLayout.addView(rowView);
+        listView.add(rowView);
+        listJson.add(j);
+    }
+
+    private void SetDocument(JSONObject j) throws JSONException {
+        String question=j.getString("question");
+        final JSONObject object = j;
+        Log.v("testing1", j.toString());
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.field_fill_document, null);
+
+        Button image_answer = rowView.findViewById(R.id.btn_add_image_field_edit_text_fill);
+        final TextView textView = rowView.findViewById(R.id.field_fill_edit_text);
+        imageView = rowView.findViewById(R.id.image_field_edit);
+        textView.setText(question);
+
+        image_answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(FormFill.this);
+            }
+        });
+        // Add the new row before the add field button.
+        parentLinearLayout.addView(rowView);
+        listView.add(rowView);
+        listJson.add(j);
+
+    }
+
+    private void SetDropDownMenu(JSONObject j) throws JSONException {
+        String question=j.getString("question");
+        final JSONObject object = j;
+        JSONArray jsonArray =  j.getJSONArray("group");
+        Log.v("testing1", j.toString());
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.field_fill_dropdown, null);
+
+        final TextView textView = rowView.findViewById(R.id.field_fill_edit_text);
+        Spinner spinner = rowView.findViewById(R.id.field_fill_spinner);
+        textView.setText(question);
+
+        ArrayList<String> al = new ArrayList<String>();
+        for(int i =0;i<jsonArray.length();i++){
+            al.add(jsonArray.getString(i));
+        }
+
+        ArrayAdapter<String> aa = new ArrayAdapter<String>(
+                getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, al);
+
+        spinner.setAdapter(aa);
         // Add the new row before the add field button.
         parentLinearLayout.addView(rowView);
         listView.add(rowView);
@@ -291,6 +366,11 @@ public class FormFill extends AppCompatActivity {
                 case "CheckBox":
                     fetchCheckBox(v, jsonObj);
                     break;
+                case "DropDownMenu" : fetchDropDownMenu(v, jsonObj);
+                    break;
+                case "document" : fetchDocument(v, jsonObj);
+                    break;
+
 
             }
         }
@@ -375,6 +455,37 @@ public class FormFill extends AppCompatActivity {
 
     }
 
+    private void fetchDocument(View v, JSONObject jsonObj) throws IOException, JSONException {
+        ImageView sp = v.findViewById(R.id.image_field_edit);
+
+        BitmapDrawable draw = (BitmapDrawable) sp.getDrawable();
+        Bitmap bitmap = draw.getBitmap();
+
+        FileOutputStream outStream = null;
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = new File(DIR_PATH_FILL, name);
+        dir.mkdirs();
+        String fileName = String.format("%d.jpg", System.currentTimeMillis());
+        File outFile = new File(dir, fileName);
+        String directory = outFile.getAbsolutePath();
+        outStream = new FileOutputStream(outFile);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+        outStream.flush();
+        outStream.close();
+
+        JSONObject fillJson = new JSONObject();
+        fillJson.put("document", directory);
+        listFillJson.add(fillJson);
+    }
+
+    private void fetchDropDownMenu(View v, JSONObject jsonObj) throws JSONException {
+            Spinner sp = v.findViewById(R.id.field_fill_spinner);
+            String answer = sp.getSelectedItem().toString();
+            JSONObject fillJson = new JSONObject();
+            fillJson.put("DropDownMenu", answer);
+            listFillJson.add(fillJson);
+    }
+
     private void fetchCheckBox(View v, JSONObject jsonObj) throws JSONException {
         LinearLayout ll = v.findViewById(R.id.field_fill_check_linear_layout);
         int count = ll.getChildCount();
@@ -413,13 +524,29 @@ public class FormFill extends AppCompatActivity {
     }
 
     private void fetchEditText(View v, JSONObject jsonObject) throws JSONException {
-        boolean imag = jsonObject.getBoolean("image");
-        if(!imag) {
+        boolean imag = jsonObject.getBoolean("value");
             EditText et = v.findViewById(R.id.field_fill_edit_text_value);
             String answer = et.getText().toString();
             JSONObject fillJson = new JSONObject();
             fillJson.put("EditText", answer);
             listFillJson.add(fillJson);
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                Glide.with(this)
+                        .load(resultUri)
+                        .apply(new RequestOptions())
+                        .into(imageView);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
