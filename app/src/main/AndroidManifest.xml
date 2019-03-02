@@ -22,7 +22,9 @@
         <activity android:name=".Ratings" />
         <activity android:name=".opinion" />
         <activity android:name=".feedback" />
-        <activity android:name=".FormFill" />
+        <activity android:name=".FormFill"
+            android:theme="@style/AppTheme2"
+            android:label="Form Fill"/>
         <activity android:name=".ExistingForm" />
         <activity
             android:name=".Existing"

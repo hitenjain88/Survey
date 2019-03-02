@@ -3,9 +3,11 @@ package com.example.survey;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -109,20 +113,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         viewHolder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File file = new File(directory2);
 
-                ExplosionField explosionField = ExplosionField.attach2Window((Activity) mContext);
-                explosionField.explode(viewHolder.parentlayout);
-                mTitle.remove(position);
-                mDirectory.remove(position);
-                notifyItemRangeRemoved(position,mTitle.size());
-                notifyDataSetChanged();
+                AlertDialog.Builder al=new AlertDialog.Builder(mContext);
+                al.setTitle("Delete File?");
 
-                boolean deleted = file.delete();
-                if(deleted){
-                    Toast.makeText(mContext, name+"Deleted", Toast.LENGTH_SHORT).show();
-                }else
-                    Toast.makeText(mContext, "Something went Wrong", Toast.LENGTH_SHORT).show();
+                al.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        File file = new File(directory2);
+
+                        ExplosionField explosionField = ExplosionField.attach2Window((Activity) mContext);
+                        explosionField.explode(viewHolder.parentlayout);
+                        mTitle.remove(position);
+                        mDirectory.remove(position);
+                        notifyItemRangeRemoved(position,mTitle.size());
+                        notifyDataSetChanged();
+
+                        boolean deleted = file.delete();
+                        if(deleted){
+                            Toast.makeText(mContext, name+"Deleted", Toast.LENGTH_SHORT).show();
+                        }else
+                            Toast.makeText(mContext, "Something went Wrong", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                al.setNegativeButton("Discard", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(mContext, "Delete kar rha mardarchod", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                al.setCancelable(true);
+                al.show();
+
 
             }
         });
