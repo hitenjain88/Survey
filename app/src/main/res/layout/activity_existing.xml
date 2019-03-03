@@ -23,7 +23,7 @@
 
         <com.github.florent37.shapeofview.shapes.ArcView
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="175dp"
             android:elevation="0dp"
             app:shape_arc_height="25dp"
             app:shape_arc_position="bottom"
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:gravity="bottom|right">
 
-       <!-- <android.support.design.widget.FloatingActionButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,7 +87,6 @@
             android:text="Tap Files to open More options"/>
 
     </RelativeLayout>
-
 
 
 </android.support.v4.widget.DrawerLayout>

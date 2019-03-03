@@ -237,7 +237,7 @@ public class ExistingForm extends AppCompatActivity {
             if(resultCode == 202){
 
                 final String json = data.getStringExtra("json");
-                Toast.makeText(this, json + " WORING", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, json + " WORING", Toast.LENGTH_SHORT).show();
 
 
                 try {
@@ -291,7 +291,7 @@ public class ExistingForm extends AppCompatActivity {
             if(resultCode == 203){
 
                 String json = data.getStringExtra("json");
-                Toast.makeText(this, json + " WORING", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, json + " WORING", Toast.LENGTH_SHORT).show();
                 try {
 
                     final JSONObject jsonObj = new JSONObject(json);
