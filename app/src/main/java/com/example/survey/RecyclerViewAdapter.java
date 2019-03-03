@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import tyrantgit.explosionfield.ExplosionField;
@@ -180,6 +183,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             }
         });
+
+         viewHolder.btn_share.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Toast.makeText(mContext, "sharing file", Toast.LENGTH_SHORT).show();
+
+             }
+         });
+
 
         viewHolder.btn_fill.setOnClickListener(new View.OnClickListener() {
             @Override
