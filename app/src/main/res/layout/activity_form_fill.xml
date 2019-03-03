@@ -15,33 +15,33 @@
         >
 
         <LinearLayout
+            android:id="@+id/linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/linearlayout">
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/name_filling"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textSize="25sp"
-                android:id="@+id/name_filling"
-                android:text="title"/>
+                android:text="title"
+                android:textSize="25sp" />
 
             <TextView
+                android:id="@+id/description_filling"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:maxLines="3"
                 android:text="default"
                 android:textSize="15sp"
-                android:id="@+id/description_filling"
                 tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/horizontal_line"/>
+                android:background="@drawable/horizontal_line" />
 
         </LinearLayout>
 

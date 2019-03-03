@@ -30,7 +30,7 @@ public class ActivityDropDownMenu extends AppCompatActivity {
 
     Button btn_add;
     TextView tv;
-    int flag;
+    int flag,flag2=0;
     String s1;
     ArrayList<String> al;
 
@@ -60,6 +60,7 @@ public class ActivityDropDownMenu extends AppCompatActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                flag2=flag2+1;
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDropDownMenu.this);
                 builder.setTitle("Enter the Menu Name");
 
@@ -103,6 +104,7 @@ public class ActivityDropDownMenu extends AppCompatActivity {
     }
 
 
+
     @Override
     public void onBackPressed() {
         AlertDialog.Builder al=new AlertDialog.Builder(this);
@@ -112,7 +114,7 @@ public class ActivityDropDownMenu extends AppCompatActivity {
         al.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(flag==1){
+                if(flag==1&&flag2>=2){
                     try {
                         returnResult();
                     } catch (JSONException e) {
@@ -165,14 +167,14 @@ public class ActivityDropDownMenu extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.save_option:
-                if(flag==1){
+                if(flag==1&&flag2>=2){
                     try {
                         returnResult();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }}
                 else{
-                    Toast.makeText(this, "Enter your Question", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Enter your Question or dropdown items", Toast.LENGTH_SHORT).show();
                 }
                 break;
 

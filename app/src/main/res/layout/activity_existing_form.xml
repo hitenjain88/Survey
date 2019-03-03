@@ -87,6 +87,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_check_box_black_24dp"
                 app:fab_colorNormal="#00C2FF"
+                app:fab_colorPressed="@color/royal_blue"
                 android:id="@+id/float_existing_check"
                 app:fab_title="@string/Check_box"
                 />
@@ -95,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_multi_24dp"
                 app:fab_colorNormal="#00C2FF"
+                app:fab_colorPressed="@color/royal_blue"
                 android:id="@+id/float_existing_multi"
                 app:fab_title="@string/Multi_line"
                 />
@@ -103,6 +105,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_edit_text_black_24dp"
                 app:fab_colorNormal="#00C2FF"
+                app:fab_colorPressed="@color/royal_blue"
                 android:id="@+id/float_existing_edit_text"
                 app:fab_title="@string/Text_box"
                 />

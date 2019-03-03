@@ -13,19 +13,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ActivityDropDownMenu"></activity>
-        <activity android:name=".ActivityDocument" />
+        <activity android:name=".ActivityDropDownMenu"
+            android:theme="@style/AppTheme2"
+            android:label="DropDownMenu"></activity>
+        <activity android:name=".ActivityDocument"
+            android:theme="@style/AppTheme2"
+            android:label="Document Upload"/>
         <activity android:name=".Activity_Analytics_Show" />
         <activity android:name=".Analytics_Filled" />
         <activity android:name=".Analitics_List" />
-        <activity android:name=".PreviewForm" />
+        <activity android:name=".PreviewForm"
+            android:label="Preview Form"
+                  android:theme="@style/AppTheme2" />
         <activity android:name=".Ratings" />
         <activity android:name=".opinion" />
         <activity android:name=".feedback" />
         <activity android:name=".FormFill"
-            android:theme="@style/AppTheme2"
-            android:label="Form Fill"/>
-        <activity android:name=".ExistingForm" />
+                  android:label="Filling Form"
+                  android:theme="@style/AppTheme2" />
+        <activity android:name=".ExistingForm"
+            android:label="Editable File"
+            android:theme="@style/AppTheme2"/>
         <activity
             android:name=".Existing"
             android:label="Existing Form"
@@ -33,20 +41,24 @@
         <activity android:name=".ActivityDirectory" />
         <activity
             android:name=".Multi_Text_Activity"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme2"
+            android:label="@string/Multi_line"/>
         <activity
             android:name=".Check_Box_Activity"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme2"
+            android:label="@string/Check_box"/>
         <activity
             android:name=".Radio_Button_Activity"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme2"
+            android:label="@string/Radio_button"/>
         <activity android:name=".Testing" />
         <activity
             android:name=".Edit_Text_Activity"
             android:theme="@style/AppTheme2" />
         <activity
             android:name=".CreateForm"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme2"
+            android:label="Creating Form"/>
         <activity
             android:name=".MainMenu"
             android:theme="@style/splashScreenTheme">
