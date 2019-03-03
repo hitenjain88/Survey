@@ -59,60 +59,7 @@ public class MainMenu extends AppCompatActivity  {
     private Dialog alertDialog;
     private String DIR_PATH;
     private final int STORAGE_PERMISSION_CODE=100;
-    //ProgressBar spinner;
-    //MyProgressTask p1;
 
-
-
-
-    /*public class MyProgressTask extends AsyncTask<Void,Integer,String> {
-
-        Context ctx;
-        ProgressDialog pd;
-
-        public MyProgressTask(Context ct){
-            ctx=ct;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            pd=new ProgressDialog(ctx);
-            pd.setTitle("Loading");
-            pd.setMessage("please wait");
-            pd.setProgress(0);
-            pd.setMax(1);
-            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            pd.setButton(ProgressDialog.BUTTON_NEGATIVE, "cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                    cancel(true);
-                }
-            });
-            pd.show();
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            Intent intent = new Intent(MainMenu.this,Existing.class);
-            startActivity(intent);
-            publishProgress(1);
-            return "Successful";
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            int myvalue=values[0];
-            pd.setProgress(myvalue);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            Toast.makeText(MainMenu.this,s,Toast.LENGTH_SHORT).show();
-            pd.dismiss();
-        }
-    }
-*/
 
 
     @Override
@@ -245,12 +192,17 @@ public class MainMenu extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
 
+                if(ContextCompat.checkSelfPermission(MainMenu.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    requestStoragePermission();
+                }else{
+
                 //p1=new MyProgressTask(MainMenu.this);
                 //p1.execute();
                 //spinner.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(MainMenu.this,Existing.class);
                 startActivity(intent);
                 //spinner.setVisibility(View.GONE);
+              }
             }
         });
     }

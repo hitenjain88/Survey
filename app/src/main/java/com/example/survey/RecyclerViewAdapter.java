@@ -148,8 +148,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 });
                 al.setCancelable(true);
                 al.show();
-
-
             }
         });
 

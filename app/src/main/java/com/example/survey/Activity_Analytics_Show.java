@@ -271,7 +271,6 @@ public class Activity_Analytics_Show extends AppCompatActivity {
         final ArrayList<String> items = new ArrayList<>();
         for(int i = 0;i < answerList.size();i++){
             items.add(answerList.get(i)[position]);
-
         }
         ListView lv = new ListView(this);
 
@@ -372,7 +371,7 @@ public class Activity_Analytics_Show extends AppCompatActivity {
                             }
 
                             TextView tv = rowView.findViewById(R.id.show);
-                            tv.setText("Meadian : "+t);
+                            tv.setText("Median : "+t);
                             tv.setTextSize(30);
                             bc.invalidate();
                             break;
