@@ -11,16 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.mayojava.statlib.CentralTendency;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -40,6 +44,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class Activity_Analytics_Show extends AppCompatActivity {
@@ -171,6 +176,7 @@ public class Activity_Analytics_Show extends AppCompatActivity {
 
         BarData data = new BarData(barDataSet);
         bc.setData(data);
+        bc.animateY(5000, Easing.EaseInCubic);
         TextView tv = new TextView(this);
         tv.setText(questionList.get(position));
         tv.setTextSize(20);
@@ -282,30 +288,175 @@ public class Activity_Analytics_Show extends AppCompatActivity {
 
     }
 
-    public void EditTextAnalytics(int position){
-        TextView tv = new TextView(this);
-        tv.setText(questionList.get(position));
-        tv.setTextSize(20);
-        tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        tv.setTextColor(Color.WHITE);
-        final ArrayList<String> items = new ArrayList<>();
-        for(int i = 0;i < answerList.size();i++){
-            items.add(answerList.get(i)[position]);
+    public void EditTextAnalytics(int position) throws JSONException {
+        JSONObject jsonObject = list.get(position);
+        boolean value =  jsonObject.getBoolean("value");
+
+        if(!value) {
+            TextView tv = new TextView(this);
+            tv.setText(questionList.get(position));
+            tv.setTextSize(20);
+            tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            tv.setTextColor(Color.WHITE);
+            final ArrayList<String> items = new ArrayList<>();
+            for (int i = 0; i < answerList.size(); i++) {
+                items.add(answerList.get(i)[position]);
+
+            }
+            ListView lv = new ListView(this);
+
+            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                    this,
+                    android.R.layout.simple_list_item_1,
+                    items);
+            AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, AbsListView.LayoutParams.FILL_PARENT);
+            params.height = items.size() * 100;
+            lv.setLayoutParams(params);
+
+            lv.setAdapter(arrayAdapter);
+            parentLinearLayout.addView(tv);
+            parentLinearLayout.addView(lv);
+        }else{
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View rowView = inflater.inflate(R.layout.edittext_int_analytics, null);
+            Spinner spinner = rowView.findViewById(R.id.spinner_int_analytics);
+            ArrayList<String> formulae = new ArrayList<>();
+            formulae.add("Mean");
+            formulae.add("Median");
+            //formulae.add("Mode");
+            formulae.add("Variance");
+            formulae.add("Standard Deviation");
+
+            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                    this,
+                    android.R.layout.simple_list_item_1,
+                    formulae);
+            spinner.setAdapter(arrayAdapter);
+            final BarChart bc = rowView.findViewById(R.id.barChartAnalytics);
+
+            final ArrayList<Integer> items = new ArrayList<>();
+            for (int i = 0; i < answerList.size(); i++) {
+                String t = answerList.get(i)[position];
+                items.add((Integer.parseInt(t)));
+            }
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    Toast.makeText(Activity_Analytics_Show.this, ""+position, Toast.LENGTH_SHORT).show();
+
+                    switch (position){
+                        case 0 : {
+                            double mean = CentralTendency.arithmeticMean(items).doubleValue();
+                            TextView tv = rowView.findViewById(R.id.show);
+                            tv.setText("Mean : "+mean);
+                            tv.setTextSize(30);
+                            bc.invalidate();
+                            break;
+                        }
+                        case 1 : { double[] s = new double[items.size()];
+
+                            for(int i=0; i< items.size(); i++){
+                                s[i] = items.get(i);
+                            }
+                            Arrays.sort(s);
+                            double t = 0;
+                            if(s.length%2 == 0){
+                                t = s[s.length/2] + s[s.length/2-1];
+                                t /= 2;
+                            }
+                            else{
+                                t = s[s.length/2];
+                            }
+
+                            TextView tv = rowView.findViewById(R.id.show);
+                            tv.setText("Meadian : "+t);
+                            tv.setTextSize(30);
+                            bc.invalidate();
+                            break;
+                        }
+
+                       /* case 2 : {
+                            //int[] frequecy =
+                            break;
+                        }*/
+
+                        case 2 :{
+                            float Sum = 0;
+                            for(int i=0; i<items.size();i++){
+                                Sum+=items.get(i);
+                            }
+                            float Mean = Sum/items.size();
+                            double[] rms = new double[items.size()];
+
+                            for(int i=0; i<items.size();i++){
+                                rms[i] = Math.pow((double)Mean - items.get(i), 2d);
+                            }
+                            Sum = 0;
+                            for(double i: rms){
+                                Sum += i;
+                            }
+                            double variance = Sum/rms.length;
+                            TextView tv = rowView.findViewById(R.id.show);
+                            tv.setText("Variance : "+variance);
+                            tv.setTextSize(30);
+                            bc.invalidate();
+                            break;
+                        }
+                        case 3 : {
+                            float Sum = 0;
+                            for(int i=0; i<items.size();i++){
+                                Sum+=items.get(i);
+                            }
+                            float Mean = Sum/items.size();
+                            double[] rms = new double[items.size()];
+
+                            for(int i=0; i<items.size();i++){
+                                rms[i] = Math.pow((double)Mean - items.get(i), 2d);
+                            }
+                            Sum = 0;
+                            for(double i: rms){
+                                Sum += i;
+                            }
+                            double std = Math.sqrt(Sum/rms.length);
+
+                            TextView tv = rowView.findViewById(R.id.show);
+                            tv.setText("Standard deviation : "+std);
+                            tv.setTextSize(30);
+                            bc.invalidate();
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+
+            ArrayList<BarEntry> barEntries = new ArrayList<>();
+            ArrayList<Integer> zero = new ArrayList<>();
+            for(Integer i : items){
+                zero.add(0);
+            }
+            for(int i = 0; i < items.size();i++){
+                barEntries.add(new BarEntry(i*2, items.get(i)));
+            }
+
+
+            BarDataSet barDataSet = new BarDataSet(barEntries, jsonObject.getString("question"));
+            barDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+
+            BarData data = new BarData(barDataSet);
+            bc.animateY(5000, Easing.EaseInCubic);
+            bc.setData(data);
+
+            parentLinearLayout.addView(rowView);
 
         }
-        ListView lv = new ListView(this);
-
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                items);
-        AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, AbsListView.LayoutParams.FILL_PARENT);
-        params.height=items.size()*100;
-        lv.setLayoutParams(params);
-
-        lv.setAdapter(arrayAdapter);
-        parentLinearLayout.addView(tv);
-        parentLinearLayout.addView(lv);
 
     }
 
