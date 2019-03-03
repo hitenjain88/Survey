@@ -20,7 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -117,6 +121,9 @@ public class Activity_Analytics_Show extends AppCompatActivity {
                     break;
                     case "CheckBox" : CheckBoxAnalytics(i);
                     break;
+                    case "document" : continue;
+
+                    case "DropDownMenu" : DropDownAnalytics(i);
 
                 }
             }
@@ -134,6 +141,44 @@ public class Activity_Analytics_Show extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void DropDownAnalytics(int position) throws JSONException {
+        JSONObject jsonObject = list.get(position);
+        JSONArray jsonArray = jsonObject.getJSONArray("group");
+        ArrayList<String> labels = new ArrayList<>();
+
+        for(int i = 0;i < jsonArray.length(); i++){
+            labels.add(jsonArray.getString(i));
+        }
+        ArrayList<String> Answer = new ArrayList<>();
+
+        for(int i = 0;i< answerList.size(); i++){
+            Answer.add(answerList.get(i)[position]);
+        }
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.bar_chart_analytics, null);
+
+        BarChart bc = rowView.findViewById(R.id.barChartAnalytics);
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        for(int i = 0; i < labels.size();i++){
+            barEntries.add(new BarEntry(Collections.frequency(Answer, labels.get(i)), i));
+        }
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, jsonObject.getString("question"));
+        barDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+
+        BarData data = new BarData(barDataSet);
+        bc.setData(data);
+        TextView tv = new TextView(this);
+        tv.setText(questionList.get(position));
+        tv.setTextSize(20);
+        tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        tv.setTextColor(Color.WHITE);
+
+        parentLinearLayout.addView(tv);
+        parentLinearLayout.addView(rowView);
     }
 
     private void CheckBoxAnalytics(int position) throws JSONException {
