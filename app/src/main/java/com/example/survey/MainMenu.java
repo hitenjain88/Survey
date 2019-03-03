@@ -4,11 +4,14 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -34,6 +37,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -54,7 +58,62 @@ public class MainMenu extends AppCompatActivity  {
     private View alertView;
     private Dialog alertDialog;
     private String DIR_PATH;
-    private final int STORAGE_PERMISSION_CODE = 100;
+    private final int STORAGE_PERMISSION_CODE=100;
+    //ProgressBar spinner;
+    //MyProgressTask p1;
+
+
+
+
+    /*public class MyProgressTask extends AsyncTask<Void,Integer,String> {
+
+        Context ctx;
+        ProgressDialog pd;
+
+        public MyProgressTask(Context ct){
+            ctx=ct;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            pd=new ProgressDialog(ctx);
+            pd.setTitle("Loading");
+            pd.setMessage("please wait");
+            pd.setProgress(0);
+            pd.setMax(1);
+            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            pd.setButton(ProgressDialog.BUTTON_NEGATIVE, "cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                    cancel(true);
+                }
+            });
+            pd.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            Intent intent = new Intent(MainMenu.this,Existing.class);
+            startActivity(intent);
+            publishProgress(1);
+            return "Successful";
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            int myvalue=values[0];
+            pd.setProgress(myvalue);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(MainMenu.this,s,Toast.LENGTH_SHORT).show();
+            pd.dismiss();
+        }
+    }
+*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +121,9 @@ public class MainMenu extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         Toolbar toolbar = findViewById(R.id.tb);
+        //spinner=(ProgressBar)findViewById(R.id.spinner);
+        //spinner.setVisibility(View.GONE);
+        //p1=new MyProgressTask(getApplicationContext());
 
         toolbar.setBackgroundColor(Color.rgb(29,29,29));
         setSupportActionBar(toolbar);
@@ -183,8 +245,12 @@ public class MainMenu extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
 
+                //p1=new MyProgressTask(MainMenu.this);
+                //p1.execute();
+                //spinner.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(MainMenu.this,Existing.class);
                 startActivity(intent);
+                //spinner.setVisibility(View.GONE);
             }
         });
     }
