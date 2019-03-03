@@ -177,6 +177,7 @@ public class Activity_Analytics_Show extends AppCompatActivity {
         BarData data = new BarData(barDataSet);
         bc.setData(data);
         bc.animateY(5000, Easing.EaseInCubic);
+
         TextView tv = new TextView(this);
         tv.setText(questionList.get(position));
         tv.setTextSize(20);

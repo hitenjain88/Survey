@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -33,6 +35,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -59,7 +62,7 @@ public class FormFill extends AppCompatActivity {
     private ArrayList<View> listView;
     private ArrayList<JSONObject> listJson;
     private ArrayList<JSONObject> listFillJson;
-
+    private boolean Flag = false;
     private ImageView imageView;
 
 
@@ -139,6 +142,7 @@ public class FormFill extends AppCompatActivity {
                 try {
                     FetchAllAnswer();
                 } catch (JSONException e) {
+                    Toast.makeText(FormFill.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -457,9 +461,13 @@ public class FormFill extends AppCompatActivity {
 
     private void fetchDocument(View v, JSONObject jsonObj) throws IOException, JSONException {
         ImageView sp = v.findViewById(R.id.image_field_edit);
+        if(sp.getVisibility() == View.GONE){
+                throw new JSONException("Input Image first");
 
+        }
         BitmapDrawable draw = (BitmapDrawable) sp.getDrawable();
         Bitmap bitmap = draw.getBitmap();
+
 
         FileOutputStream outStream = null;
         File sdCard = Environment.getExternalStorageDirectory();
@@ -509,7 +517,11 @@ public class FormFill extends AppCompatActivity {
     private void fetchRadioGroup(View v, JSONObject jsonObj) throws JSONException {
         RadioGroup rg = v.findViewById(R.id.field_fill_radio_group);
         RadioButton rb = findViewById(rg.getCheckedRadioButtonId());
+
         String answer = rb.getText().toString();
+        if(answer.equals("")){
+            throw new JSONException("Check radio button first");
+        }
         JSONObject fillJson = new JSONObject();
         fillJson.put("RadioGroup", answer);
         listFillJson.add(fillJson);
@@ -518,6 +530,9 @@ public class FormFill extends AppCompatActivity {
     private void fetchMultiText(View v, JSONObject jsonObj) throws JSONException {
         EditText et = v.findViewById(R.id.answer_fill_multi);
         String answer = et.getText().toString();
+        if(answer.equals("")){
+            throw new JSONException("Input Some Text");
+        }
         JSONObject fillJson = new JSONObject();
         fillJson.put("MultiText", answer);
         listFillJson.add(fillJson);
@@ -527,10 +542,12 @@ public class FormFill extends AppCompatActivity {
         boolean imag = jsonObject.getBoolean("value");
             EditText et = v.findViewById(R.id.field_fill_edit_text_value);
             String answer = et.getText().toString();
+            if(answer.equals("")){
+                throw new JSONException("Input Some Text");
+            }
             JSONObject fillJson = new JSONObject();
             fillJson.put("EditText", answer);
             listFillJson.add(fillJson);
-
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -549,4 +566,5 @@ public class FormFill extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 }

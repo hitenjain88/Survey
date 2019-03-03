@@ -188,6 +188,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
              @Override
              public void onClick(View v) {
                  Toast.makeText(mContext, "sharing file", Toast.LENGTH_SHORT).show();
+                 Intent intentShareFile = new Intent(Intent.ACTION_SEND);
+                 File fileWithinMyDir = new File(directory2);
+
+                 if(fileWithinMyDir.exists()) {
+                     intentShareFile.setType("application/json");
+                     intentShareFile.putExtra(Intent.EXTRA_STREAM, Uri.parse(directory2));
+
+                     /*intentShareFile.putExtra(Intent.EXTRA_SUBJECT,
+                             "Sharing File...");
+                     intentShareFile.putExtra(Intent.EXTRA_TEXT, "Sharing File...");*/
+
+                     mContext.startActivity(Intent.createChooser(intentShareFile, mTitle.get(position)));
+                 }
 
              }
          });

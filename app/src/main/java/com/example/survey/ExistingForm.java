@@ -64,30 +64,31 @@ public class ExistingForm extends AppCompatActivity {
         float_document = findViewById(R.id.float_existing_document);
         float_dropdown = findViewById(R.id.float_existing_drop_down);
 
-        Log.v("testing1", "akjflf");
+
 
         Intent intent = getIntent();
         String json = intent.getStringExtra("json");
-        Log.v("testing1", json);
 
         parentLinearLayout = findViewById(R.id.parent_layout_existing);
 
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray type = jsonObject.getJSONArray("type");
-            Log.v("testing1", type.toString()+"akjflf");
+            Log.v("testing12",  type.length()+" Length");
+            Log.v("testing12", jsonObject.toString()+"123");
+
+
             name = jsonObject.getString("title");
             desc = jsonObject.getString("description");
-            author = jsonObject.getString("author");
+            //author = jsonObject.getString("author");
 
-            Log.v("testing1",  type.length()+" Length");
 
             for(int i = 0; i < type.length(); i++){
                 String jj = type.getString(i);
-                Log.v("testing1", jj + " JJ");
+                Log.v("testing12", jj + " JJ");
                 JSONObject j = new JSONObject(jj);
 
-                Log.v("testing1", j.toString()+"10011");
+                Log.v("testing12", j.toString()+"10011");
                 switch (j.getString("type")){
                     case "EditText" : SetEditText(j);
                     break;
@@ -561,7 +562,7 @@ public class ExistingForm extends AppCompatActivity {
         boolean imag = j.getBoolean("value");
         final JSONObject object = j;
         list.add(object);
-        Log.v("testing1", j.toString());
+        Log.v("testing12", j.toString());
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.field_edittext, null);
 
@@ -681,4 +682,6 @@ public class ExistingForm extends AppCompatActivity {
         fos.write(data.getBytes());
         fos.close();
     }
+
+
 }

@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:gravity="bottom|right">
 
-        <android.support.design.widget.FloatingActionButton
+       <!-- <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,9 +74,20 @@
             android:layout_margin="16dp"
             android:clickable="true"
             android:src="@drawable/ic_create_black_24dp"
-            app:backgroundTint="@android:color/black"/>
+            app:backgroundTint="@android:color/black"/>-->
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:text="Tap Files to open More options"/>
 
     </RelativeLayout>
+
 
 
 </android.support.v4.widget.DrawerLayout>
